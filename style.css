@@ -1,37 +1,263 @@
+:root {
+  --bg1: #0b1020;
+  --bg2: #1a1140;
+  --bg3: #241046;
+  --glass: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --accent: #8b5cf6;
+  --accent2: #ec4899;
+  --accent3: #22c55e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: 'Cairo', sans-serif;
-  background: linear-gradient(135deg, #1e3a8a, #7e22ce, #ec4899);
   min-height: 100vh;
+  font-family: Arial, "Cairo", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(236, 72, 153, 0.22), transparent 28%),
+    radial-gradient(circle at top right, rgba(139, 92, 246, 0.24), transparent 30%),
+    radial-gradient(circle at bottom center, rgba(34, 197, 94, 0.12), transparent 32%),
+    linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
   overflow-x: hidden;
 }
 
-/* Smooth Fade */
-.fade-in {
-  animation: fade 0.6s ease;
+::selection {
+  background: rgba(236, 72, 153, 0.35);
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(20px);}
-  to { opacity: 1; transform: translateY(0);}
+.bg-orb {
+  position: fixed;
+  inset: auto;
+  filter: blur(45px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+  animation: float 10s ease-in-out infinite;
 }
 
-/* زرار تأثير */
-button {
-  transition: 0.3s;
-}
-button:hover {
-  transform: scale(1.05);
+.orb-1 {
+  top: 2%;
+  left: 3%;
+  width: 240px;
+  height: 240px;
+  background: #ec4899;
 }
 
-/* اهتزاز خفيف */
-.shake {
-  animation: shake 0.3s;
+.orb-2 {
+  top: 18%;
+  right: 4%;
+  width: 180px;
+  height: 180px;
+  background: #8b5cf6;
+  animation-delay: 1.5s;
 }
-@keyframes shake {
-  0% { transform: translateX(0);}
-  25% { transform: translateX(-5px);}
-  50% { transform: translateX(5px);}
-  75% { transform: translateX(-5px);}
-  100% { transform: translateX(0);}
+
+.orb-3 {
+  bottom: 4%;
+  left: 30%;
+  width: 220px;
+  height: 220px;
+  background: #22c55e;
+  animation-delay: 3s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-18px) scale(1.05); }
+}
+
+.glass-card {
+  position: relative;
+  z-index: 1;
+  border-radius: 28px;
+  border: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08));
+  backdrop-filter: blur(22px);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.input-soft {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 18px;
+  padding: 0.95rem 1rem;
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  outline: none;
+  transition: 0.25s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.input-soft::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.input-soft:focus {
+  border-color: rgba(236,72,153,0.7);
+  box-shadow: 0 0 0 4px rgba(236,72,153,0.18);
+  transform: translateY(-1px);
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 0;
+  border-radius: 18px;
+  font-weight: 800;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
+  user-select: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  box-shadow: 0 14px 30px rgba(139, 92, 246, 0.28);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+.btn-secondary {
+  color: #fff;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+}
+
+.stat-box {
+  border-radius: 24px;
+  padding: 1rem 1rem;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.stat-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.55);
+}
+
+.stat-value {
+  margin-top: 0.45rem;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.prompt-card {
+  border-radius: 30px;
+  padding: 1.35rem;
+  background:
+    linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08)),
+    radial-gradient(circle at top right, rgba(236, 72, 153, 0.18), transparent 35%);
+  border: 1px solid rgba(255,255,255,0.15);
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: pop 0.48s ease;
+}
+
+.avatar-ring {
+  width: 70px;
+  height: 70px;
+  border-radius: 24px;
+  display: grid;
+  place-items: center;
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  box-shadow:
+    0 0 0 6px rgba(255,255,255,0.08),
+    0 16px 35px rgba(0,0,0,0.25);
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34,197,94,0.55);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.55); }
+  70% { box-shadow: 0 0 0 14px rgba(34,197,94,0); }
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+
+@keyframes pop {
+  0%   { opacity: 0; transform: translateY(12px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.player-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(12px);
+}
+
+.player-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.player-remove {
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  padding: 0;
+}
+
+.player-remove:hover {
+  color: #fb7185;
+}
+
+.history-item {
+  border-radius: 18px;
+  padding: 0.8rem 0.9rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.hidden {
+  display: none !important;
 }
