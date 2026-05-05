@@ -8,7 +8,7 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Font Awesome -->
+  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <!-- CSS -->
@@ -17,41 +17,54 @@
 
 <body class="text-white">
 
-  <div class="max-w-2xl mx-auto p-6">
+<div class="max-w-2xl mx-auto p-6">
 
-    <div class="text-center mb-10 pt-8">
-      <h1 class="text-5xl font-bold mb-2">🔥 الحقيقة أو التحدي</h1>
-      <p class="text-xl opacity-90">ميتزهقش أبدًا!</p>
+  <!-- Header -->
+  <div class="text-center mb-10 pt-8">
+    <h1 class="text-5xl font-bold mb-2">🔥 الحقيقة أو التحدي</h1>
+    <p class="text-xl opacity-90">لعبة جامدة بجد 😏</p>
+  </div>
+
+  <!-- Players -->
+  <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 mb-8">
+    <h2 class="text-2xl mb-4">اللاعبين</h2>
+    <div id="players-list" class="flex flex-wrap gap-3 mb-4"></div>
+
+    <div class="flex gap-3">
+      <input id="player-name" type="text" placeholder="اسم اللاعب..."
+        class="flex-1 bg-white/20 px-4 py-3 rounded-xl"/>
+      <button onclick="addPlayer()" class="bg-pink-500 px-6 rounded-xl">
+        +
+      </button>
     </div>
+  </div>
 
-    <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 mb-8">
-      <h2 class="text-2xl font-semibold mb-4">اللاعبين</h2>
-      <div id="players-list" class="flex flex-wrap gap-3 mb-4"></div>
+  <!-- Start -->
+  <button onclick="startGame()"
+    class="w-full py-5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl text-2xl mb-6">
+    🎲 ابدأ اللعبة
+  </button>
 
-      <div class="flex gap-3">
-        <input id="player-name" type="text" placeholder="اسم اللاعب..."
-               class="flex-1 bg-white/20 rounded-2xl px-5 py-3"/>
-        <button onclick="addPlayer()" class="bg-pink-500 px-6 rounded-2xl">
-          + إضافة
-        </button>
-      </div>
-    </div>
+  <!-- Game -->
+  <div id="game-area" class="hidden text-center">
 
-    <button onclick="startGame()" class="w-full py-5 bg-pink-500 rounded-2xl text-2xl">
-      🎲 ابدأ اللعبة
-    </button>
-
-    <div id="game-area" class="hidden mt-8 text-center">
+    <div class="bg-white/10 p-8 rounded-3xl fade-in">
       <h2 id="current-player" class="text-3xl mb-6"></h2>
-      <div id="question" class="text-2xl mb-6"></div>
+      <div id="question" class="text-2xl min-h-[120px]"></div>
 
-      <button onclick="nextQuestion()" class="bg-white text-black px-6 py-3 rounded-xl">
-        التالي
+      <button onclick="nextQuestion()"
+        class="mt-6 bg-white text-black px-6 py-3 rounded-xl">
+        التالي →
       </button>
     </div>
 
   </div>
 
-  <script src="script.js"></script>
+</div>
+
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script src="script.js"></script>
 </body>
 </html>
