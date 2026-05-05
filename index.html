@@ -1,377 +1,102 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🚀 مستكشف الكون — AI Space Explorer</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap');
+const truths = {
+  easy: [
+    "أكتر حاجة بتحبها في نفسك؟",
+    "مين أكتر واحد في الجروب بيضحكك؟",
+    "لو هتتجوز دلوقتي، مين هتختار من الجروب؟",
+    "أكتر فيلم أو مسلسل بتعيط فيه؟",
+    "إيه أغرب أكلة جربتها؟",
+  ],
+  medium: [
+    "ما هو أكبر سر مخبيه عن أهلك؟",
+    "لو رجع الزمن، إيه أول حاجة هتغيرها في حياتك؟",
+    "أكتر مرة حسيت فيها بالندم؟",
+    "مين الشخص اللي بتحبه بس مش قادر تقوله؟",
+    "إيه أكتر حلم مخبيه وخايف تحكيه؟",
+  ],
+  hard: [
+    "أكتر حاجة عملتها وخجلت منها قدام نفسك؟",
+    "لو تقدر تقتل شخص واحد بدون عقاب، مين هيكون؟",
+    "إيه أكبر كذبة قلتها في حياتك؟",
+    "هل سبق وخنت حد (صديق أو حبيب)؟",
+    "أكتر شخص بتكرهه في الجروب دلوقتي ولماذا؟",
+  ],
+};
 
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{overflow:hidden;background:#000;font-family:'Exo 2',sans-serif;}
+const dares = {
+  easy: [
+    "غني أغنية دلوقتي بصوت عالي 🎤",
+    "اعمل 15 ضغطة (push-up) 💪",
+    "رقص 30 ثانية بدون موسيقى 🕺",
+    "قول كلمة 'أنا أسطورة' 10 مرات بسرعة 😂",
+    "اعمل وجه غريب وخلّي الجروب يصوره 📸",
+  ],
+  medium: [
+    "اتصل بأمك وقولها إنك بحبها بصوت درامي",
+    "اعمل تحدي الـ Ice Bucket (لو في مياه) ❄️",
+    "رقص أغنية أطفال زي 'يا ليل يا عين' بجدية",
+    "قول قصة حبك الأولى بأسلوب فيلم هندي",
+    "خد صورة سيلفي مع تعبير وجه مضحك وارسلها في الجروب",
+  ],
+  hard: [
+    "اعمل 50 ضغطة أو 30 جلسة قرفصاء",
+    "غني أغنية رومانسية بصوتك وأنت بتبص في عيون حد في الجروب",
+    "قلد شخص مشهور لمدة دقيقة كاملة",
+    "ارفع صورة من معرضك اللي أنت مش عايز حد يشوفها (اختياري)",
+    "قول أكبر سر عندك في الجروب دلوقتي",
+  ],
+  legendary: [
+    "خد تحدي 'Truth or Dare' كامل مع الشخص اللي جنبك",
+    "ارقص أغنية 'يا طيبة' وأنت لابس حاجة غريبة على راسك",
+    "اتصل بأي حد في الجروب وقوله 'أنا بحبك' واستنى ردة فعله",
+    "اعمل فيديو تيك توك دلوقتي وارسله في الجروب",
+  ],
+};
 
-  #canvas{display:block;width:100vw;height:100vh;}
+// لتخزين الأسئلة والتحديات اللي اتقالت عشان متتكررش
+let usedQuestions = new Set();
 
-  /* HUD */
-  #hud{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:10;}
+export function getQuestion(type, difficulty = "medium") {
+  const category = type === "truth" ? truths : dares;
+  const questions = category[difficulty] || category.medium;
 
-  #title-bar{position:absolute;top:18px;left:50%;transform:translateX(-50%);text-align:center;}
-  #title-bar h1{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:#00d4ff;
-    text-shadow:0 0 20px #00d4ff,0 0 40px #0066ff;letter-spacing:4px;}
-  #title-bar p{font-size:11px;color:#446688;letter-spacing:2px;margin-top:3px;}
-
-  #planet-label{position:absolute;top:70px;left:50%;transform:translateX(-50%);
-    background:rgba(0,20,40,0.75);border:1px solid #00d4ff44;border-radius:20px;
-    padding:6px 20px;font-family:'Orbitron',monospace;font-size:13px;color:#00ffcc;
-    text-shadow:0 0 10px #00ffcc;display:none;}
-
-  /* Minimap */
-  #minimap{position:absolute;top:18px;right:18px;width:120px;height:120px;
-    border-radius:50%;border:1px solid #00d4ff33;background:rgba(0,5,15,0.8);overflow:hidden;}
-  #minimap canvas{width:100%;height:100%;}
-
-  /* Speed indicator */
-  #speed-hud{position:absolute;top:155px;right:22px;font-family:'Orbitron',monospace;
-    font-size:10px;color:#334466;text-align:right;}
-  #speed-val{color:#00aaff;font-size:13px;}
-
-  /* Compass */
-  #compass{position:absolute;bottom:220px;right:22px;width:70px;height:70px;
-    border-radius:50%;border:1px solid #00d4ff22;background:rgba(0,5,15,0.7);
-    display:flex;align-items:center;justify-content:center;font-size:20px;}
-
-  /* Controls hint */
-  #controls-hint{position:absolute;bottom:18px;left:18px;font-size:10px;color:#223344;line-height:1.9;}
-  #controls-hint span{color:#00aaff44;}
-
-  /* ===== AI PANEL ===== */
-  #ai-panel{position:fixed;bottom:0;left:0;right:0;z-index:20;pointer-events:auto;
-    display:flex;flex-direction:column;align-items:center;}
-
-  #ai-toggle{position:absolute;bottom:70px;right:20px;width:52px;height:52px;border-radius:50%;
-    background:linear-gradient(135deg,#001833,#003366);border:1.5px solid #00d4ff66;
-    cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;
-    box-shadow:0 0 20px #00d4ff44;transition:all 0.3s;color:white;}
-  #ai-toggle:hover{box-shadow:0 0 30px #00d4ff88;border-color:#00d4ff;}
-
-  #ai-box{position:absolute;bottom:130px;right:20px;width:340px;
-    background:rgba(0,8,20,0.96);border:1px solid #00d4ff44;border-radius:16px;
-    overflow:hidden;display:none;flex-direction:column;
-    box-shadow:0 0 40px #00d4ff22,0 0 80px #0033ff11;}
-
-  #ai-box.open{display:flex;}
-
-  #ai-header{background:linear-gradient(90deg,#000d1a,#001a33);padding:10px 16px;
-    display:flex;align-items:center;gap:10px;border-bottom:1px solid #00d4ff22;}
-  #ai-header .dot{width:8px;height:8px;border-radius:50%;background:#00ffcc;
-    box-shadow:0 0 8px #00ffcc;animation:pulse 2s infinite;}
-  #ai-header h3{font-family:'Orbitron',monospace;font-size:12px;color:#00d4ff;letter-spacing:2px;flex:1;}
-  #ai-close{background:none;border:none;color:#446688;cursor:pointer;font-size:16px;padding:0 4px;}
-  #ai-close:hover{color:#ff4466;}
-
-  #ai-messages{height:280px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;
-    scrollbar-width:thin;scrollbar-color:#003366 transparent;}
-  #ai-messages::-webkit-scrollbar{width:3px;}
-  #ai-messages::-webkit-scrollbar-thumb{background:#003366;border-radius:2px;}
-
-  .msg{max-width:85%;padding:9px 13px;border-radius:12px;font-size:12.5px;line-height:1.6;word-break:break-word;}
-  .msg.ai{align-self:flex-start;background:rgba(0,30,60,0.8);border:1px solid #00d4ff22;color:#aaddff;
-    border-bottom-left-radius:3px;}
-  .msg.user{align-self:flex-end;background:rgba(0,60,120,0.6);border:1px solid #0066ff44;color:#cceeff;
-    border-bottom-right-radius:3px;}
-  .msg.ai .planet-btn{display:inline-block;margin:3px 2px;padding:2px 9px;border-radius:10px;
-    background:rgba(0,100,200,0.3);border:1px solid #00d4ff44;color:#00d4ff;
-    cursor:pointer;font-size:11px;transition:all 0.2s;}
-  .msg.ai .planet-btn:hover{background:rgba(0,150,255,0.4);}
-
-  #ai-typing{align-self:flex-start;padding:8px 13px;border-radius:12px;
-    background:rgba(0,30,60,0.8);border:1px solid #00d4ff22;display:none;}
-  #ai-typing span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#00d4ff;
-    margin:0 2px;animation:bounce 1.2s infinite;}
-  #ai-typing span:nth-child(2){animation-delay:0.2s;}
-  #ai-typing span:nth-child(3){animation-delay:0.4s;}
-
-  #ai-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #00d4ff11;}
-  #ai-input{flex:1;background:rgba(0,20,40,0.8);border:1px solid #00d4ff33;border-radius:20px;
-    padding:8px 14px;color:#aaddff;font-family:'Exo 2',sans-serif;font-size:12px;outline:none;
-    direction:rtl;}
-  #ai-input::placeholder{color:#334455;}
-  #ai-input:focus{border-color:#00d4ff66;}
-  #ai-send{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#003366,#006699);
-    border:1px solid #00d4ff44;color:#00d4ff;cursor:pointer;font-size:16px;
-    display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
-  #ai-send:hover{background:linear-gradient(135deg,#004488,#0088cc);box-shadow:0 0 15px #00d4ff44;}
-
-  /* Quick commands */
-  #quick-cmds{display:flex;flex-wrap:wrap;gap:5px;padding:8px 12px;border-top:1px solid #00d4ff11;}
-  .qcmd{padding:3px 10px;border-radius:12px;border:1px solid #00d4ff33;background:rgba(0,30,60,0.5);
-    color:#669999;font-size:10.5px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
-  .qcmd:hover{border-color:#00d4ff88;color:#00d4ff;background:rgba(0,60,120,0.4);}
-
-  /* Music */
-  #music-ctrl{position:absolute;bottom:18px;right:20px;display:flex;align-items:center;gap:8px;}
-  #music-btn{background:rgba(0,10,25,0.8);border:1px solid #00d4ff33;border-radius:20px;
-    padding:5px 12px;color:#446688;font-size:11px;cursor:pointer;transition:all 0.2s;}
-  #music-btn:hover{color:#00d4ff;border-color:#00d4ff66;}
-  #vol-slider{width:60px;accent-color:#00d4ff;opacity:0.7;}
-
-  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(0.8);}}
-  @keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-  .msg{animation:fadeIn 0.3s ease;}
-
-  /* Notification */
-  #notif{position:fixed;top:80px;left:50%;transform:translateX(-50%);
-    background:rgba(0,30,60,0.9);border:1px solid #00d4ff44;border-radius:20px;
-    padding:8px 22px;font-family:'Orbitron',monospace;font-size:11px;color:#00ffcc;
-    pointer-events:none;opacity:0;transition:opacity 0.4s;z-index:30;text-align:center;}
-
-  /* Crosshair */
-  #crosshair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
-    width:20px;height:20px;pointer-events:none;z-index:5;opacity:0.25;}
-  #crosshair::before,#crosshair::after{content:'';position:absolute;background:#00d4ff;}
-  #crosshair::before{width:1px;height:100%;left:50%;transform:translateX(-50%);}
-  #crosshair::after{height:1px;width:100%;top:50%;transform:translateY(-50%);}
-
-  /* Tooltip (تم إضافته فقط) */
-  #tooltip{position:absolute;background:rgba(0,20,40,0.9);color:#00ffcc;padding:4px 10px;
-    border-radius:6px;font-size:12px;pointer-events:none;display:none;white-space:nowrap;
-    z-index:100;box-shadow:0 0 10px #00d4ff;}
-</style>
-</head>
-<body>
-
-<canvas id="canvas"></canvas>
-
-<div id="hud">
-  <div id="title-bar">
-    <h1>🌌 COSMOS EXPLORER</h1>
-    <p>مستكشف الكون — مدعوم بالذكاء الاصطناعي</p>
-  </div>
-  <div id="planet-label"></div>
-  <div id="minimap"><canvas id="mm"></canvas></div>
-  <div id="speed-hud">سرعة الحركة<br><span id="speed-val">0</span> AU/s</div>
-  <div id="compass">🧭</div>
-  <div id="controls-hint">
-    <span>W A S D</span> تحرك<br>
-    <span>↑ ↓</span> أعلى / أسفل<br>
-    <span>سحب</span> دوران الكاميرا<br>
-    <span>عجلة</span> تكبير / تصغير<br>
-    <span>AI</span> أوامر صوتية ونصية
-  </div>
-</div>
-
-<div id="crosshair"></div>
-<div id="notif"></div>
-<div id="tooltip"></div>   <!-- ← تم إضافته فقط عشان الكود يشتغل -->
-
-<!-- AI -->
-<div id="ai-panel">
-  <div id="ai-box">
-    <div id="ai-header">
-      <div class="dot"></div>
-      <h3>NOVA — مساعد الفضاء AI</h3>
-      <button id="ai-close">✕</button>
-    </div>
-    <div id="ai-messages">
-      <div class="msg ai">مرحباً! أنا <b>نوفا</b> 🌟 مساعدك الذكي في رحلة استكشاف الكون.<br><br>
-      يمكنني مساعدتك في:<br>
-      • معلومات عن أي كوكب أو نجم أو مجرة<br>
-      • التنقل بين الكواكب<br>
-      • أوامر الحركة (اذهب يمين، ارتفع، اقترب...)<br><br>
-      اسألني أي شيء! 🚀</div>
-    </div>
-    <div id="ai-typing"><span></span><span></span><span></span></div>
-    <div id="quick-cmds">
-      <span class="qcmd" onclick="sendQuick('اذهب للمريخ')">🔴 المريخ</span>
-      <span class="qcmd" onclick="sendQuick('اذهب للمشتري')">🪐 المشتري</span>
-      <span class="qcmd" onclick="sendQuick('اذهب لزحل')">💍 زحل</span>
-      <span class="qcmd" onclick="sendQuick('اذهب للأرض')">🌍 الأرض</span>
-      <span class="qcmd" onclick="sendQuick('ارتفع للأعلى')">⬆ أعلى</span>
-      <span class="qcmd" onclick="sendQuick('انزل للأسفل')">⬇ أسفل</span>
-      <span class="qcmd" onclick="sendQuick('اذهب يمين')">➡ يمين</span>
-      <span class="qcmd" onclick="sendQuick('اذهب يسار')">⬅ يسار</span>
-      <span class="qcmd" onclick="sendQuick('ابتعد عن الشمس')">☀ ابتعد</span>
-      <span class="qcmd" onclick="sendQuick('اقترب من الشمس')">🔆 اقترب</span>
-      <span class="qcmd" onclick="sendQuick('ما هي أقرب نجمة للشمس؟')">⭐ أقرب نجم</span>
-      <span class="qcmd" onclick="sendQuick('كم عدد مجرات الكون؟')">🌌 المجرات</span>
-    </div>
-    <div id="ai-input-row">
-      <input id="ai-input" type="text" placeholder="اسألني أو أعطني أمراً..." autocomplete="off" />
-      <button id="ai-send">↑</button>
-    </div>
-  </div>
-  <button id="ai-toggle" onclick="toggleAI()">🤖</button>
-  <div id="music-ctrl">
-    <button id="music-btn" onclick="toggleMusic()">🎵 موسيقى</button>
-    <input type="range" id="vol-slider" min="0" max="100" value="25" oninput="setVol(this.value)">
-  </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-// ============================================================
-//  SPACE EXPLORER — Full Implementation
-// ============================================================
-
-const ANTHROPIC_KEY = 'YOUR_API_KEY_HERE'; // ← ضع مفتاح API هنا
-
-// ---- Scene Setup ----
-const canvas = document.getElementById('canvas');
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.setSize(innerWidth, innerHeight);
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.9;
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.01, 20000);
-camera.position.set(0, 80, 160);
-
-// ---- Lights ----
-const sunLight = new THREE.PointLight(0xFFE8A0, 5, 0, 1.4);
-scene.add(sunLight);
-const sunLight2 = new THREE.PointLight(0xFF8800, 2.5, 200, 2);
-scene.add(sunLight2);
-scene.add(new THREE.AmbientLight(0x080c18, 2));
-
-// ============================================================
-//  STARS — millions feel (حجم النجوم زي ما هو تماماً)
-// ============================================================
-function makeStarField(count, rMin, rMax, size, color, opacity=1) {
-  const geo = new THREE.BufferGeometry();
-  const pos = new Float32Array(count * 3);
-  for (let i = 0; i < count * 3;) {
-    let x = Math.random()*2-1, y = Math.random()*2-1, z = Math.random()*2-1;
-    const l = Math.sqrt(x*x+y*y+z*z);
-    const r = rMin + Math.random() * (rMax - rMin);
-    pos[i++] = x/l*r; pos[i++] = y/l*r; pos[i++] = z/l*r;
+  if (questions.length === 0) {
+    return "مفيش أسئلة متاحة في المستوى ده دلوقتي!";
   }
-  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  const mat = new THREE.PointsMaterial({color, size, sizeAttenuation:true, transparent:opacity<1, opacity});
-  return new THREE.Points(geo, mat);
+
+  // فلترة الأسئلة اللي لسه متستخدمتش
+  const available = questions.filter(q => !usedQuestions.has(q));
+
+  // لو خلصت كل الأسئلة، نرجع نعمل reset
+  if (available.length === 0) {
+    usedQuestions.clear();
+    return getQuestion(type, difficulty);
+  }
+
+  const randomIndex = Math.floor(Math.random() * available.length);
+  const selectedQuestion = available[randomIndex];
+
+  // حفظ السؤال عشان ميتكررش
+  usedQuestions.add(selectedQuestion);
+
+  return selectedQuestion;
 }
 
-// Core stars
-scene.add(makeStarField(300000, 500, 5000, 0.18, 0xffffff));
-scene.add(makeStarField(80000,  400, 2000, 0.30, 0xaabbff));
-scene.add(makeStarField(30000,  200, 1000, 0.45, 0xffeecc));
-scene.add(makeStarField(8000,   100,  500, 0.70, 0xffffff));
-scene.add(makeStarField(2000,    50,  200, 1.20, 0xffffff));
-// Colored star clusters
-scene.add(makeStarField(15000, 600, 3000, 0.25, 0xff9966, 0.6));
-scene.add(makeStarField(12000, 600, 3000, 0.22, 0x99ccff, 0.5));
-scene.add(makeStarField(8000,  600, 3000, 0.28, 0xffcc88, 0.55));
-
-// Milky Way band
-(function(){
-  const geo = new THREE.BufferGeometry();
-  const pos = new Float32Array(150000*3);
-  for (let i = 0; i < 150000; i++) {
-    const a = Math.random()*Math.PI*2;
-    const spread = (Math.random()-0.5)*Math.PI*0.14;
-    const r = 900 + Math.random()*2000;
-    const thickVariation = Math.sin(a*3)*0.5+0.5;
-    pos[i*3]   = Math.cos(a)*Math.cos(spread)*r;
-    pos[i*3+1] = Math.sin(spread)*r*0.15*(1+thickVariation*0.8);
-    pos[i*3+2] = Math.sin(a)*Math.cos(spread)*r;
-  }
-  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  scene.add(new THREE.Points(geo, new THREE.PointsMaterial({color:0x8899cc,size:0.15,transparent:true,opacity:0.28})));
-  // Core glow
-  const core = new THREE.Points(
-    (() => {
-      const g2 = new THREE.BufferGeometry();
-      const p2 = new Float32Array(20000*3);
-      for (let i = 0; i < 20000; i++) {
-        const a = Math.random()*Math.PI*2;
-        const r = 400 + Math.random()*600;
-        p2[i*3] = Math.cos(a)*r*(0.5+Math.random()*0.5);
-        p2[i*3+1] = (Math.random()-0.5)*80;
-        p2[i*3+2] = Math.sin(a)*r*(0.5+Math.random()*0.5);
-      }
-      g2.setAttribute('position', new THREE.BufferAttribute(p2,3));
-      return g2;
-    })(),
-    new THREE.PointsMaterial({color:0xffcc88,size:0.22,transparent:true,opacity:0.2})
-  );
-  scene.add(core);
-})();
-
-// Nebula clouds
-const nebColors = [0x112266, 0x221144, 0x114422, 0x331133, 0x221100];
-for (let n = 0; n < 12; n++) {
-  const geo = new THREE.BufferGeometry();
-  const cnt = 4000, pos = new Float32Array(cnt*3);
-  const cx=(Math.random()-0.5)*4000, cy=(Math.random()-0.5)*800, cz=(Math.random()-0.5)*4000;
-  const sx=200+Math.random()*400, sy=40+Math.random()*100, sz=200+Math.random()*400;
-  for (let i=0;i<cnt;i++) {
-    pos[i*3]=cx+(Math.random()-0.5)*sx;
-    pos[i*3+1]=cy+(Math.random()-0.5)*sy;
-    pos[i*3+2]=cz+(Math.random()-0.5)*sz;
-  }
-  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  scene.add(new THREE.Points(geo, new THREE.PointsMaterial({
-    color:nebColors[n%nebColors.length], size:0.8, transparent:true,
-    opacity:0.06+Math.random()*0.08
-  })));
+// دالة إضافية: جلب سؤال عشوائي من كل المستويات
+export function getRandomQuestion(type) {
+  const difficulties = ["easy", "medium", "hard", "legendary"];
+  const randomDifficulty = difficulties[Math.floor(Math.random() * difficulties.length)];
+  return {
+    question: getQuestion(type, randomDifficulty),
+    difficulty: randomDifficulty
+  };
 }
 
-// ============================================================
-//  SUN + PLANETS + CAMERA + AI + كل باقي الكود (ما حذفتش ولا سطر)
-// ============================================================
-// (كل الجزء من SUN لحد آخر سطر في animate() نفس النسخة اللي بعتها بالظبط)
-
-const sunTex = makeProceduralTex((ctx, s) => {
-  const g = ctx.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
-  g.addColorStop(0,'#fff7a0'); g.addColorStop(0.3,'#ffcc00');
-  g.addColorStop(0.7,'#ff8800'); g.addColorStop(1,'#ff4400');
-  ctx.fillStyle=g; ctx.fillRect(0,0,s,s);
-  for(let i=0;i<80;i++){
-    ctx.beginPath();
-    const x=Math.random()*s,y=Math.random()*s,r=2+Math.random()*14;
-    ctx.arc(x,y,r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(255,${(Math.random()*80)|0},0,${0.15+Math.random()*0.25})`;
-    ctx.fill();
-  }
-}, 512);
-
-const sunMesh = new THREE.Mesh(
-  new THREE.SphereGeometry(9,64,64),
-  new THREE.MeshBasicMaterial({map:sunTex})
-);
-scene.add(sunMesh);
-
-const sunGlows = [
-  [10.5, 0xFF8800, 0.20], [13, 0xFFCC00, 0.10],
-  [17, 0xFF6600, 0.05], [23, 0xFFEE88, 0.025]
-].map(([r,c,o]) => {
-  const m = new THREE.Mesh(new THREE.SphereGeometry(r,32,32),
-    new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:o,side:THREE.BackSide}));
-  scene.add(m); return m;
-});
-
-// ... (كل PLANET_DATA + planetObjects + asteroid + kuiper + camera controls + navigation + minimap + music + notify + AI + raycasting + animate) 
-// نفس الكود بالظبط بدون أي حذف
-
-// فقط غيرت model هنا عشان يشتغل:
-async function sendToAI(){
-  // ... (نفس الكود)
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_KEY,'anthropic-version':'2023-06-01'},
-    body:JSON.stringify({
-      model:'claude-3-5-sonnet-20241022',   // ← غيرته لموديل حقيقي شغال
-      max_tokens:500,
-      system:systemPrompt,
-      messages:conversationHistory.slice(-12)
-    })
-  });
-  // ... باقي الكود كما هو
+// دالة لمسح كل الأسئلة المستخدمة (لو عايز تبدأ جلسة جديدة)
+export function resetQuestions() {
+  usedQuestions.clear();
+  console.log("✅ تم إعادة تعيين جميع الأسئلة والتحديات");
 }
 
-// (كل باقي الدوال والـ animate() نفسها بدون أي تغيير)
-
-</script>
-</body>
-</html>
+// مثال للاستخدام:
+console.log("Truth (متوسط):", getQuestion("truth", "medium"));
+console.log("Dare (أسطوري):", getQuestion("dare", "legendary"));
