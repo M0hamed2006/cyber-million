@@ -1,0 +1,13 @@
+body {
+  background: linear-gradient(135deg, #1e3a8a, #7e22ce, #ec4899);
+  min-height: 100vh;
+  font-family: 'Cairo', sans-serif;
+}
+
+.card {
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
