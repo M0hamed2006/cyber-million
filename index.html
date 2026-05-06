@@ -1,193 +1,347 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pulse Party — الحقيقة أو التحدي</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#8b5cf6">
+  <title>🔥 الحقيقة أو التحدي - النسخة الأسطورية الخرافية 🎭</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-
-<body class="text-white">
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-  <div class="bg-orb orb-3"></div>
-
-  <main class="mx-auto max-w-6xl px-4 py-8 lg:py-12">
-    <header class="mb-8 text-center">
-      <div class="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2 backdrop-blur-xl shadow-2xl">
-        <span class="pulse-dot"></span>
-        <span class="text-sm font-medium tracking-wide">Party Mode • Local Multiplayer</span>
+<body>
+  <div class="stars"></div>
+  <div class="container">
+    <!-- الشريط العلوي -->
+    <nav class="top-nav">
+      <div class="logo-section">
+        <h1 class="logo animated-logo">🔥 الحقيقة أو التحدي 🎭</h1>
+        <p class="tagline">النسخة الخرافية الأسطورية - احصل على الأجواء المذهلة!</p>
       </div>
+      <div class="controls">
+        <button id="theme-toggle" class="theme-btn" title="تبديل المظهر">🌙</button>
+        <button id="stats-btn" class="stats-btn" title="الإحصائيات">📊</button>
+        <button id="settings-btn" class="settings-btn" title="الإعدادات">⚙️</button>
+      </div>
+    </nav>
 
-      <h1 class="mt-6 text-4xl font-black leading-tight md:text-6xl">
-        Pulse Party
-      </h1>
-      <p class="mt-3 text-base text-white/80 md:text-lg">
-        الحقيقة أو التحدي — نسخة لامعة، سريعة، ومتحضرة جدًا.
-      </p>
-    </header>
-
-    <section class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-      <div class="glass-card p-5 md:p-6">
-        <div class="flex items-center justify-between gap-4">
-          <div>
-            <h2 class="text-xl font-bold md:text-2xl">إعدادات اللعبة</h2>
-            <p class="mt-1 text-sm text-white/70">أضف اللاعبين، اختار المود، وابدأ الجلسة.</p>
+    <!-- القسم الرئيسي - إعداد اللعبة -->
+    <section id="setup-section" class="setup-section">
+      <div class="setup-card">
+        <h2 class="section-title">⚙️ إعداد اللاعبون</h2>
+        
+        <!-- إضافة اللاعبين -->
+        <div class="players-setup">
+          <div class="input-group">
+            <input 
+              id="player-name" 
+              type="text" 
+              placeholder="أدخل اسم اللاعب..." 
+              class="fancy-input"
+              autocomplete="off"
+            />
+            <button id="add-player-btn" class="btn btn-primary">➕ إضافة لاعب</button>
           </div>
-          <div class="rounded-2xl bg-white/10 px-4 py-3 text-center">
-            <div class="text-xs uppercase tracking-[0.25em] text-white/60">Rounds</div>
-            <div id="turn-count" class="text-2xl font-black">0</div>
-          </div>
-        </div>
-
-        <div class="mt-6 grid gap-4 md:grid-cols-[1fr_auto]">
-          <div class="rounded-3xl border border-white/10 bg-black/15 p-4">
-            <label for="player-name" class="mb-2 block text-sm font-medium text-white/75">اسم اللاعب</label>
-            <div class="flex gap-3">
-              <input id="player-name" type="text" placeholder="اكتب الاسم واضغط إضافة"
-                class="input-soft flex-1" maxlength="20" autocomplete="off"/>
-              <button onclick="addPlayer()" class="btn-primary shrink-0">
-                <i class="fa-solid fa-user-plus"></i>
-                <span class="hidden sm:inline">إضافة</span>
+          <div id="players-list" class="players-list animated-list"></div>
+          
+          <!-- وضع اللعبة -->
+          <div class="mode-selector">
+            <h3>🎮 اختر وضع اللعبة</h3>
+            <div class="mode-buttons">
+              <button class="mode-btn active" data-mode="classic">
+                <span class="mode-icon">👥</span>
+                <span>الوضع الكلاسيكي</span>
+              </button>
+              <button class="mode-btn" data-mode="team">
+                <span class="mode-icon">🤝</span>
+                <span>وضع الفريق</span>
+              </button>
+              <button class="mode-btn" data-mode="chaos">
+                <span class="mode-icon">⚡</span>
+                <span>وضع الفوضى</span>
               </button>
             </div>
           </div>
-
-          <div class="rounded-3xl border border-white/10 bg-black/15 p-4 md:min-w-[190px]">
-            <label class="mb-2 block text-sm font-medium text-white/75">صوت/إعلان</label>
-            <button id="sound-toggle" onclick="toggleSound()" class="btn-secondary w-full">
-              <i class="fa-solid fa-volume-high"></i>
-              <span id="sound-label">ON</span>
-            </button>
-          </div>
         </div>
 
-        <div class="mt-5 grid gap-4 md:grid-cols-3">
-          <div>
-            <label class="mb-2 block text-sm font-medium text-white/75">نوع اللعب</label>
-            <select id="mode" class="input-soft w-full">
-              <option value="mix">Mix — الحقيقة والتحدي</option>
-              <option value="truth">Truth — الحقيقة فقط</option>
-              <option value="dare">Dare — التحدي فقط</option>
+        <!-- خيارات اللعبة -->
+        <div class="game-options-grid">
+          <div class="option-card">
+            <label>🎲 نوع السؤال</label>
+            <select id="question-type" class="fancy-select">
+              <option value="random">🎲 عشوائي (حقيقة/تحدي)</option>
+              <option value="truth">🤔 الحقيقة فقط</option>
+              <option value="dare">🔥 التحدي فقط</option>
+              <option value="dirty">🌶️ جرء جداً (للبالغين)</option>
+              <option value="romantic">💕 رومانسي</option>
+              <option value="funny">😂 مرح</option>
             </select>
           </div>
-          <div>
-            <label class="mb-2 block text-sm font-medium text-white/75">الجو العام</label>
-            <select id="vibe" class="input-soft w-full">
-              <option value="chill">Chill</option>
-              <option value="funny" selected>Funny</option>
-              <option value="chaos">Chaos</option>
+
+          <div class="option-card">
+            <label>💪 مستوى الصعوبة</label>
+            <select id="difficulty" class="fancy-select">
+              <option value="easy">😊 سهل (بريء)</option>
+              <option value="medium">😏 متوسط (مثير)</option>
+              <option value="hard">🔥 صعب (عميق)</option>
+              <option value="extreme">⚡ قاسي (نفسي)</option>
+              <option value="legendary">👑 أسطوري (خرافي)</option>
             </select>
           </div>
-          <div>
-            <label class="mb-2 block text-sm font-medium text-white/75">حفظ الحالة</label>
-            <button onclick="clearSavedData()" class="btn-secondary w-full">
-              <i class="fa-solid fa-trash"></i>
-              Reset
-            </button>
+
+          <div class="option-card">
+            <label>⏱️ عدد الأسئلة</label>
+            <input id="questions-count" type="number" min="5" max="100" value="20" class="fancy-input">
+          </div>
+
+          <div class="option-card">
+            <label>⚙️ سرعة اللعبة</label>
+            <select id="game-speed" class="fancy-select">
+              <option value="slow">🐢 بطيء</option>
+              <option value="normal">⏱️ عادي</option>
+              <option value="fast">⚡ سريع</option>
+              <option value="crazy">🚀 مجنون</option>
+            </select>
           </div>
         </div>
 
-        <div class="mt-5">
-          <div class="mb-2 flex items-center justify-between">
-            <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-white/55">اللاعبين</h3>
-            <span id="players-count" class="text-sm text-white/70">0 لاعب</span>
-          </div>
-          <div id="players-list" class="flex flex-wrap gap-3"></div>
-        </div>
+        <!-- زر البداية -->
+        <button id="start-btn" class="btn btn-large btn-start">
+          <span class="start-icon">🎲</span>
+          <span>ابدأ اللعبة الآن!</span>
+        </button>
+      </div>
+    </section>
 
-        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-          <button onclick="startGame()" class="btn-primary flex-1 py-4 text-lg">
-            <i class="fa-solid fa-bolt"></i>
-            ابدأ اللعبة
-          </button>
-          <button onclick="shufflePlayers()" class="btn-secondary sm:w-44 py-4">
-            <i class="fa-solid fa-shuffle"></i>
-            Shuffle
-          </button>
+    <!-- منطقة اللعبة -->
+    <section id="game-section" class="game-section hidden">
+      <!-- عرض اللاعب الحالي -->
+      <div class="game-header">
+        <div class="current-player-display">
+          <h2 id="current-player" class="player-name"></h2>
+          <div class="player-turn-indicator">
+            <span id="turn-number"></span>
+          </div>
+        </div>
+        <div class="game-stats-header">
+          <div class="stat">
+            <span class="stat-label">⏱️ الوقت:</span>
+            <span id="timer" class="stat-value">0:00</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">📊 نقاط:</span>
+            <span id="points-display" class="stat-value">0</span>
+          </div>
         </div>
       </div>
 
-      <aside class="glass-card p-5 md:p-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-xl font-bold md:text-2xl">الإحصائيات</h2>
-            <p class="mt-1 text-sm text-white/70">ترتيب لطيف يخلي اللعبة تبان “منتج” مش صفحة.</p>
-          </div>
-          <div class="rounded-2xl bg-white/10 px-4 py-3 text-center">
-            <div class="text-xs uppercase tracking-[0.25em] text-white/60">Best</div>
-            <div id="best-score" class="text-2xl font-black">0</div>
-          </div>
-        </div>
-
-        <div class="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-          <div class="stat-box">
-            <div class="stat-title">الحالة</div>
-            <div id="game-status" class="stat-value">جاهز</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-title">الدور الحالي</div>
-            <div id="current-turn" class="stat-value">—</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-title">النقاط</div>
-            <div id="score-summary" class="stat-value">0</div>
+      <!-- صندوق السؤال -->
+      <div class="question-container">
+        <div class="question-type-badge" id="question-badge"></div>
+        <div class="question-box animated-question">
+          <div id="question-text" class="question-text"></div>
+          <div class="question-meta">
+            <span id="difficulty-badge" class="badge"></span>
+            <span id="question-counter" class="badge"></span>
           </div>
         </div>
 
-        <div class="mt-5 rounded-3xl border border-white/10 bg-black/15 p-4">
-          <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-white/55">آخر 5 جولات</h3>
-          <div id="history-list" class="mt-3 space-y-3"></div>
+        <!-- الأزرار -->
+        <div class="question-actions">
+          <button id="next-btn" class="btn btn-success">
+            <span>✅ تم الإجابة</span>
+          </button>
+          <button id="skip-btn" class="btn btn-warning">
+            <span>⏭️ تخطي</span>
+          </button>
+          <button id="repeat-btn" class="btn btn-info">
+            <span>🔄 إعادة</span>
+          </button>
+          <button id="custom-btn" class="btn btn-secondary">
+            <span>✏️ سؤال مخصص</span>
+          </button>
         </div>
-      </aside>
+
+        <!-- مربع الإدخال المخصص -->
+        <div id="custom-input-box" class="custom-input-box hidden">
+          <input 
+            id="custom-question-input" 
+            type="text" 
+            placeholder="اكتب سؤالك الخاص..." 
+            class="fancy-input"
+            maxlength="200"
+          />
+          <button id="add-custom-btn" class="btn btn-primary">➕ إضافة</button>
+          <button id="cancel-custom-btn" class="btn btn-secondary">❌ إلغاء</button>
+        </div>
+      </div>
+
+      <!-- الدردشة والملاحظات -->
+      <div class="game-bottom">
+        <div class="notes-section">
+          <h3>📝 الملاحظات السريعة</h3>
+          <div id="notes-box" class="notes-box"></div>
+          <div class="notes-input">
+            <input 
+              id="note-input" 
+              type="text" 
+              placeholder="أضف ملاحظة..." 
+              class="fancy-input"
+            />
+            <button id="add-note-btn" class="btn btn-small btn-primary">➕</button>
+          </div>
+        </div>
+
+        <div class="chat-section">
+          <h3>💬 الدردشة الحية</h3>
+          <div id="chat-box" class="chat-box"></div>
+          <div class="chat-inputs">
+            <input 
+              id="chat-input" 
+              type="text" 
+              placeholder="أرسل رسالة..." 
+              class="fancy-input"
+            />
+            <button id="send-btn" class="btn btn-primary btn-small">📤</button>
+            <button id="image-btn" class="btn btn-small" title="صورة">🖼️</button>
+            <button id="record-btn" class="btn btn-small" title="صوت">🎤</button>
+            <button id="emoji-btn" class="btn btn-small" title="إيموجي">😊</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- أزرار الإنهاء -->
+      <div class="game-controls">
+        <button id="pause-btn" class="btn btn-warning">⏸️ إيقاف مؤقت</button>
+        <button id="end-btn" class="btn btn-danger">🛑 إنهاء اللعبة</button>
+        <button id="leaderboard-btn" class="btn btn-info">🏆 النتائج</button>
+      </div>
     </section>
 
-    <section id="game-area" class="mt-6 hidden">
-      <div class="glass-card overflow-hidden p-5 md:p-7">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div id="player-avatar" class="avatar-ring">?</div>
+    <!-- شاشة النتائج -->
+    <section id="results-section" class="results-section hidden">
+      <div class="results-card">
+        <h2>🏆 النتائج النهائية</h2>
+        <div id="leaderboard" class="leaderboard"></div>
+        <div class="results-stats">
+          <div class="stat-box">
+            <span class="stat-icon">⏱️</span>
             <div>
-              <div class="text-sm uppercase tracking-[0.25em] text-white/55">Current Player</div>
-              <div id="current-player" class="text-2xl font-black md:text-3xl">—</div>
+              <span class="stat-label">إجمالي الوقت</span>
+              <span id="total-time" class="stat-value">0:00</span>
             </div>
           </div>
-
-          <div id="prompt-chip" class="chip">Mix</div>
-        </div>
-
-        <div id="prompt-card" class="prompt-card mt-6">
-          <div class="mb-2 flex items-center justify-between gap-3">
-            <span id="prompt-type" class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em]">Prompt</span>
-            <span id="prompt-difficulty" class="text-sm text-white/65">Funny</span>
+          <div class="stat-box">
+            <span class="stat-icon">❓</span>
+            <div>
+              <span class="stat-label">الأسئلة</span>
+              <span id="total-questions" class="stat-value">0</span>
+            </div>
           </div>
-          <div id="question" class="min-h-[160px] text-2xl font-bold leading-relaxed md:text-4xl">
-            اضغط “ابدأ اللعبة” عشان نولّعها.
+          <div class="stat-box">
+            <span class="stat-icon">🎉</span>
+            <div>
+              <span class="stat-label">نسبة الإجابة</span>
+              <span id="answer-ratio" class="stat-value">0%</span>
+            </div>
           </div>
         </div>
-
-        <div class="mt-6 grid gap-3 md:grid-cols-3">
-          <button onclick="markDone()" class="btn-primary py-4">
-            <i class="fa-solid fa-circle-check"></i>
-            تمت المهمة
-          </button>
-          <button onclick="skipPrompt()" class="btn-secondary py-4">
-            <i class="fa-solid fa-forward"></i>
-            تخطي
-          </button>
-          <button onclick="nextTurn()" class="btn-secondary py-4">
-            <i class="fa-solid fa-right-long"></i>
-            الدور الجاي
-          </button>
+        <div class="results-actions">
+          <button id="share-btn" class="btn btn-primary">📤 مشاركة النتائج</button>
+          <button id="replay-btn" class="btn btn-success">🔄 لعبة جديدة</button>
         </div>
       </div>
     </section>
-  </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+    <!-- الإحصائيات -->
+    <section id="stats-section" class="stats-section hidden">
+      <div class="stats-card">
+        <h2>📊 الإحصائيات الشاملة</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-emoji">🎮</span>
+            <div class="stat-content">
+              <span class="stat-label">إجمالي الجلسات</span>
+              <span id="total-sessions" class="stat-value">0</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-emoji">👑</span>
+            <div class="stat-content">
+              <span class="stat-label">أفضل لاعب</span>
+              <span id="best-player" class="stat-value">-</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-emoji">⚡</span>
+            <div class="stat-content">
+              <span class="stat-label">أسرع إجابة</span>
+              <span id="fastest-answer" class="stat-value">0s</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-emoji">📈</span>
+            <div class="stat-content">
+              <span class="stat-label">معدل الخجل</span>
+              <span id="skip-rate" class="stat-value">0%</span>
+            </div>
+          </div>
+        </div>
+        <button id="close-stats-btn" class="btn btn-secondary">✖️ إغلاق</button>
+      </div>
+    </section>
+
+    <!-- الإعدادات -->
+    <section id="settings-section" class="settings-section hidden">
+      <div class="settings-card">
+        <h2>⚙️ الإعدادات</h2>
+        <div class="settings-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="sound-toggle" checked>
+            <span>🔊 تفعيل الأصوات</span>
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" id="haptic-toggle" checked>
+            <span>📳 الاهتزازات</span>
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" id="confetti-toggle" checked>
+            <span>🎉 تأثيرات الاحتفال</span>
+          </label>
+        </div>
+        <div class="settings-group">
+          <label>🔊 مستوى الصوت</label>
+          <input id="volume-slider" type="range" min="0" max="100" value="70" class="slider">
+        </div>
+        <div class="settings-actions">
+          <button id="clear-data-btn" class="btn btn-danger">🗑️ حذف البيانات</button>
+          <button id="close-settings-btn" class="btn btn-secondary">✖️ إغلاق</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- مشغل الموسيقى -->
+    <footer class="music-footer">
+      <div class="music-player">
+        <button id="music-toggle" class="music-btn" title="تشغيل/إيقاف">▶️</button>
+        <span class="music-label">الموسيقى الخلفية</span>
+        <input id="music-volume" type="range" min="0" max="100" value="25" class="slider">
+        <select id="music-select" class="fancy-select">
+          <option value="ambient">🌙 موسيقى هادئة</option>
+          <option value="romantic">💕 رومانسية</option>
+          <option value="epic">⚡ ملحمية</option>
+          <option value="chill">😎 هيب هوب</option>
+        </select>
+      </div>
+    </footer>
+  </div>
+
+  <!-- عنصر الصوت -->
+  <audio id="background-music" loop></audio>
+  <audio id="effect-sound" preload="auto"></audio>
+
+  <!-- Canvas للتأثيرات -->
+  <canvas id="confetti-canvas"></canvas>
+
   <script src="script.js"></script>
 </body>
 </html>
