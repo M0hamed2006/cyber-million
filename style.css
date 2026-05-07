@@ -1,1087 +1,375 @@
-/* ========================================
-   PULSE PARTY ULTRA - CSS LEGENDARY
-   ======================================== */
-
-:root {
-  /* ألوان */
-  --primary: #8b5cf6;
-  --secondary: #ec4899;
-  --success: #34d399;
-  --danger: #f87171;
-  --warning: #fbbf24;
-  --info: #60a5fa;
-  --dark: #1a1a2e;
-  --darker: #0f0f1e;
-  --light: #f8f9fa;
-  
-  /* تدرجات */
-  --gradient-primary: linear-gradient(135deg, #8b5cf6, #ec4899);
-  --gradient-dark: linear-gradient(135deg, #1e3a8a, #7e22ce, #ec4899);
-  --gradient-gold: linear-gradient(135deg, #fbbf24, #f97316);
-  
-  /* ظلال */
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
-  --shadow-xl: 0 12px 32px rgba(0,0,0,0.3);
-  
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'Cairo', 'Tajawal', sans-serif;
-  background: var(--gradient-dark);
-  color: #fff;
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
-}
-
-body.light-mode {
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-  color: #1a1a2e;
-}
-
-body.light-mode .container {
-  color: #1a1a2e;
-}
-
-/* النجوم الخلفية */
-.stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.3;
-}
-
-.stars::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 60px 70px, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 50px 50px, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 130px 80px, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 90px 10px, #fff, rgba(0,0,0,0));
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  animation: twinkle 5s infinite;
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.8; }
-}
-
-/* الحاوية الرئيسية */
-.container {
-  width: 95%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  position: relative;
-  z-index: 2;
-}
-
-/* شريط التنقل العلوي */
-.top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  animation: slideDown 0.6s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.logo-section h1 {
-  font-size: 2.5em;
-  font-weight: 900;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 5px;
-  animation: glow 3s ease-in-out infinite;
-}
-
-@keyframes glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.3));
-  }
-  50% {
-    filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6));
-  }
-}
-
-.animated-logo {
-  letter-spacing: 2px;
-}
-
-.tagline {
-  font-size: 1em;
-  opacity: 0.8;
-  margin-top: 5px;
-}
-
-.controls {
-  display: flex;
-  gap: 10px;
-}
-
-.theme-btn, .stats-btn, .settings-btn {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
-  cursor: pointer;
-  font-size: 1.2em;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.theme-btn:hover, .stats-btn:hover, .settings-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: scale(1.1) rotate(5deg);
-}
-
-/* الأزرار */
-.btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 12px;
-  font-size: 1em;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'Cairo', sans-serif;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.btn:active::before {
-  animation: ripple 0.6s ease-out;
-}
-
-@keyframes ripple {
-  to {
-    width: 300px;
-    height: 300px;
-    opacity: 0;
-  }
-}
-
-.btn-primary {
-  background: var(--gradient-primary);
-  color: white;
-}
-
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
-}
-
-.btn-success {
-  background: var(--success);
-  color: white;
-}
-
-.btn-success:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(52, 211, 153, 0.4);
-}
-
-.btn-danger {
-  background: var(--danger);
-  color: white;
-}
-
-.btn-danger:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(248, 113, 113, 0.4);
-}
-
-.btn-warning {
-  background: var(--warning);
-  color: #1a1a2e;
-}
-
-.btn-warning:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
-}
-
-.btn-info {
-  background: var(--info);
-  color: white;
-}
-
-.btn-info:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(96, 165, 250, 0.4);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-.btn-large {
-  padding: 16px 32px;
-  font-size: 1.2em;
-  width: 100%;
-}
-
-.btn-small {
-  padding: 8px 12px;
-  font-size: 0.9em;
-}
-
-.btn-start {
-  background: var(--gradient-primary);
-  font-size: 1.3em;
-  padding: 20px;
-  margin-top: 20px;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-/* الحقول */
-.fancy-input, .fancy-select {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  color: white;
-  font-size: 1em;
-  transition: var(--transition);
-  font-family: 'Cairo', sans-serif;
-}
-
-.fancy-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.fancy-input:focus, .fancy-select:focus {
-  outline: none;
-  border-color: var(--primary);
-  background: rgba(139, 92, 246, 0.1);
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
-}
-
-.fancy-select option {
-  background: var(--darker);
-  color: white;
-}
-
-/* مجموعات الإدخال */
-.input-group {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.input-group input {
-  flex: 1;
-}
-
-/* قسم الإعداد */
-.setup-section {
-  animation: fadeIn 0.6s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.setup-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 30px;
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-lg);
-}
-
-/* قائمة اللاعبين */
-.players-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 15px 0;
-  min-height: 50px;
-}
-
-.player-chip {
-  background: var(--gradient-primary);
-  padding: 12px 16px;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  animation: slideIn 0.3s ease-out;
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.player-chip span {
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1.2em;
-}
-
-.player-chip span:hover {
-  transform: scale(1.2);
-}
-
-/* اختيار الوضع */
-.mode-selector {
-  margin: 25px 0;
-}
-
-.mode-selector h3 {
-  margin-bottom: 15px;
-  font-size: 1.1em;
-}
-
-.mode-buttons {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px;
-}
-
-.mode-btn {
-  padding: 15px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  transition: var(--transition);
-  color: white;
-}
-
-.mode-btn:hover {
-  border-color: var(--primary);
-  background: rgba(139, 92, 246, 0.2);
-  transform: translateY(-5px);
-}
-
-.mode-btn.active {
-  background: var(--gradient-primary);
-  border-color: var(--primary);
-  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
-}
-
-.mode-icon {
-  font-size: 1.8em;
-}
-
-/* شبكة الخيارات */
-.game-options-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin: 20px 0;
-}
-
-.option-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.option-card label {
-  font-weight: 600;
-  font-size: 0.95em;
-}
-
-/* عنوان القسم */
-.section-title {
-  font-size: 1.8em;
-  margin-bottom: 20px;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* قسم اللعبة */
-.game-section {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.game-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 30px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.current-player-display {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-}
-
-.player-name {
-  font-size: 2em;
-  font-weight: 900;
-  color: var(--secondary);
-  animation: bounce 1s ease-in-out;
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.player-turn-indicator {
-  font-size: 0.9em;
-  opacity: 0.8;
-}
-
-.game-stats-header {
-  display: flex;
-  gap: 15px;
-}
-
-.stat {
-  flex: 1;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  text-align: center;
-}
-
-.stat-label {
-  display: block;
-  font-size: 0.9em;
-  opacity: 0.8;
-}
-
-.stat-value {
-  display: block;
-  font-size: 1.5em;
-  font-weight: 700;
-  color: var(--success);
-  margin-top: 5px;
-}
-
-/* صندوق السؤال */
-.question-container {
-  margin-bottom: 30px;
-}
-
-.question-type-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.8em;
-  font-weight: 600;
-  margin-bottom: 15px;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.question-type-badge.truth {
-  background: rgba(96, 165, 250, 0.3);
-  color: #60a5fa;
-}
-
-.question-type-badge.dare {
-  background: rgba(248, 113, 113, 0.3);
-  color: #f87171;
-}
-
-.question-box {
-  background: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(139, 92, 246, 0.3);
-  border-radius: 20px;
-  padding: 30px;
-  margin-bottom: 20px;
-  backdrop-filter: blur(10px);
-  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes popIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) rotateZ(-5deg);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) rotateZ(0deg);
-  }
-}
-
-.animated-question {
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  0%, 100% {
-    border-color: rgba(139, 92, 246, 0.3);
-  }
-  50% {
-    border-color: rgba(236, 72, 153, 0.5);
-  }
-}
-
-.question-text {
-  font-size: 1.4em;
-  line-height: 1.6;
-  margin: 15px 0;
-  min-height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.question-meta {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.badge {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.85em;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* أزرار الإجراءات */
-.question-actions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-/* الدردشة والملاحظات */
-.game-bottom {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.notes-section, .chat-section {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 15px;
-}
-
-.notes-section h3, .chat-section h3 {
-  margin-bottom: 10px;
-  font-size: 1em;
-}
-
-.notes-box, .chat-box {
-  max-height: 120px;
-  overflow-y: auto;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 0.9em;
-}
-
-.notes-box div, .chat-box div {
-  margin-bottom: 8px;
-  padding: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  animation: slideIn 0.3s ease-out;
-  word-wrap: break-word;
-}
-
-.notes-input, .chat-inputs {
-  display: flex;
-  gap: 8px;
-}
-
-.notes-input input, .chat-inputs input {
-  flex: 1;
-}
-
-/* أزرار التحكم */
-.game-controls {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.game-controls .btn {
-  flex: 1;
-}
-
-/* القسم المخصص */
-.custom-input-box {
-  background: rgba(255, 255, 255, 0.08);
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  display: flex;
-  gap: 10px;
-}
-
-.custom-input-box input {
-  flex: 1;
-}
-
-.custom-input-box button {
-  padding: 8px 16px;
-}
-
-/* قسم النتائج */
-.results-section {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.results-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 40px;
-  backdrop-filter: blur(10px);
-  text-align: center;
-}
-
-.results-card h2 {
-  font-size: 2.5em;
-  margin-bottom: 30px;
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.leaderboard {
-  margin-bottom: 30px;
-}
-
-.leaderboard-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  margin-bottom: 10px;
-  animation: slideIn 0.5s ease-out;
-}
-
-.medal {
-  font-size: 1.5em;
-  margin-right: 10px;
-}
-
-.player-info {
-  flex: 1;
-  text-align: right;
-}
-
-.player-info-name {
-  font-size: 1.1em;
-  font-weight: 600;
-}
-
-.player-info-score {
-  font-size: 0.9em;
-  opacity: 0.8;
-}
-
-.results-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
-.stat-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-}
-
-.stat-icon {
-  font-size: 2em;
-}
-
-.stat-content {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-}
-
-.results-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-/* الإحصائيات */
-.stats-section {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.stats-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 30px;
-  backdrop-filter: blur(10px);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.stat-card {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-}
-
-.stat-emoji {
-  font-size: 2em;
-}
-
-/* الإعدادات */
-.settings-section {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.settings-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 30px;
-  backdrop-filter: blur(10px);
-}
-
-.settings-group {
-  margin-bottom: 25px;
-}
-
-.settings-group label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.toggle-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.toggle-label input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.slider {
-  width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.2);
-  outline: none;
-  -webkit-appearance: none;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--primary);
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
-}
-
-.slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--primary);
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
-}
-
-.settings-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-/* مشغل الموسيقى */
-.music-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 12px 20px;
-  z-index: 100;
-}
-
-.music-player {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.music-btn {
-  font-size: 1.2em;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.music-btn:hover {
-  transform: scale(1.2);
-}
-
-.music-label {
-  font-size: 0.9em;
-  min-width: 100px;
-}
-
-.music-player .slider {
-  width: 100px;
-}
-
-.music-player .fancy-select {
-  width: 150px;
-  padding: 8px;
-  font-size: 0.9em;
-}
-
-/* الحالات */
-.hidden {
-  display: none !important;
-}
-
-.recording {
-  background: var(--danger);
-  animation: pulse 0.5s ease-in-out infinite;
-}
-
-/* Canvas للتأثيرات */
-#confetti-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 50;
-}
-
-/* الاستجابة */
-@media (max-width: 768px) {
-  .game-header {
-    grid-template-columns: 1fr;
-  }
-
-  .game-bottom {
-    grid-template-columns: 1fr;
-  }
-
-  .question-actions {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .game-controls {
-    flex-direction: column;
-  }
-
-  .game-controls .btn {
-    width: 100%;
-  }
-
-  .mode-buttons {
-    grid-template-columns: 1fr;
-  }
-
-  .logo-section h1 {
-    font-size: 1.8em;
-  }
-
-  .top-nav {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .controls {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .results-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .music-player {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .music-player .slider,
-  .music-player .fancy-select {
-    width: 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* الوضع الفاتح */
-.light-mode .setup-card,
-.light-mode .stats-card,
-.light-mode .results-card,
-.light-mode .settings-card {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.1);
-}
-
-.light-mode .fancy-input,
-.light-mode .fancy-select {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.2);
-  color: #1a1a2e;
-}
-
-.light-mode .fancy-input::placeholder {
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.light-mode .btn-secondary {
-  background: rgba(0, 0, 0, 0.1);
-  border-color: rgba(0, 0, 0, 0.2);
-  color: #1a1a2e;
-}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a1a" />
+  <meta name="description" content="الحقيقة أو التحدي - النسخة الأسطورية الخرافية" />
+  <title>🔥 الحقيقة أو التحدي — النسخة الأسطورية</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="dark" data-bg="ocean">
+
+  <!-- ═══════════════════════════════════════════════
+       CANVAS LAYERS
+  ════════════════════════════════════════════════ -->
+  <canvas id="bg-canvas"      aria-hidden="true"></canvas>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- ═══════════════════════════════════════════════
+       MAIN CONTAINER
+  ════════════════════════════════════════════════ -->
+  <div id="app">
+
+    <!-- ───────── TOP NAV ───────── -->
+    <nav class="top-nav" role="navigation" aria-label="شريط التنقل الرئيسي">
+      <div class="nav-logo">
+        <span class="logo-fire">🔥</span>
+        <div class="logo-text">
+          <h1>الحقيقة أو التحدي</h1>
+          <p>النسخة الأسطورية الخرافية ✨</p>
+        </div>
+      </div>
+      <div class="nav-controls" role="toolbar" aria-label="أدوات التحكم">
+        <button id="btn-bg-cycle"    class="nav-btn" title="تغيير الخلفية"  aria-label="تغيير الخلفية">🌅</button>
+        <button id="btn-theme"       class="nav-btn" title="تبديل المظهر"   aria-label="تبديل المظهر">🌙</button>
+        <button id="btn-stats"       class="nav-btn" title="الإحصائيات"     aria-label="الإحصائيات">📊</button>
+        <button id="btn-settings"    class="nav-btn" title="الإعدادات"      aria-label="الإعدادات">⚙️</button>
+      </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════
+         SCREEN 1 — SETUP
+    ════════════════════════════════════════════════ -->
+    <section id="screen-setup" class="screen active" aria-label="إعداد اللعبة">
+      <div class="card setup-card">
+
+        <h2 class="card-title">⚙️ إعداد اللاعبين</h2>
+
+        <!-- Add Player -->
+        <div class="input-row">
+          <input id="inp-player-name"
+                 type="text"
+                 placeholder="اسم اللاعب…"
+                 class="fancy-input"
+                 maxlength="30"
+                 autocomplete="off"
+                 aria-label="اسم اللاعب" />
+          <button id="btn-add-player" class="btn btn-primary" aria-label="إضافة لاعب">➕ إضافة</button>
+        </div>
+
+        <div id="players-list" class="players-list" role="list" aria-label="قائمة اللاعبين" aria-live="polite"></div>
+
+        <!-- Game Mode -->
+        <div class="mode-section">
+          <h3 class="sub-title">🎮 وضع اللعبة</h3>
+          <div class="mode-grid" role="radiogroup" aria-label="وضع اللعبة">
+            <button class="mode-btn active" data-mode="classic"  role="radio" aria-checked="true">
+              <span class="mode-icon">👥</span><span>كلاسيكي</span>
+            </button>
+            <button class="mode-btn"        data-mode="team"     role="radio" aria-checked="false">
+              <span class="mode-icon">🤝</span><span>فريق</span>
+            </button>
+            <button class="mode-btn"        data-mode="chaos"    role="radio" aria-checked="false">
+              <span class="mode-icon">⚡</span><span>فوضى</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Options Grid -->
+        <div class="options-grid">
+          <label class="option-block">
+            <span>🎲 نوع السؤال</span>
+            <select id="sel-q-type" class="fancy-select" aria-label="نوع السؤال">
+              <option value="random">🎲 عشوائي</option>
+              <option value="truth">🤔 حقيقة فقط</option>
+              <option value="dare">🔥 تحدي فقط</option>
+              <option value="romantic">💕 رومانسي</option>
+              <option value="funny">😂 مرح</option>
+              <option value="deep">🧠 فلسفي عميق</option>
+            </select>
+          </label>
+
+          <label class="option-block">
+            <span>💪 مستوى الصعوبة</span>
+            <select id="sel-difficulty" class="fancy-select" aria-label="مستوى الصعوبة">
+              <option value="easy">😊 سهل</option>
+              <option value="medium">😏 متوسط</option>
+              <option value="hard">🔥 صعب</option>
+              <option value="extreme">⚡ قاسي</option>
+              <option value="legendary">👑 أسطوري</option>
+            </select>
+          </label>
+
+          <label class="option-block">
+            <span>⏱️ عدد الأسئلة</span>
+            <input id="inp-q-count"
+                   type="number"
+                   min="5" max="100" value="20"
+                   class="fancy-input"
+                   aria-label="عدد الأسئلة" />
+          </label>
+
+          <label class="option-block">
+            <span>🚀 سرعة اللعبة</span>
+            <select id="sel-speed" class="fancy-select" aria-label="سرعة اللعبة">
+              <option value="slow">🐢 بطيء</option>
+              <option value="normal" selected>⏱️ عادي</option>
+              <option value="fast">⚡ سريع</option>
+              <option value="crazy">🚀 مجنون</option>
+            </select>
+          </label>
+        </div>
+
+        <button id="btn-start" class="btn btn-start" aria-label="ابدأ اللعبة">
+          <span class="btn-icon">🎲</span>
+          <span>ابدأ اللعبة الآن!</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SCREEN 2 — GAME
+    ════════════════════════════════════════════════ -->
+    <section id="screen-game" class="screen hidden" aria-label="اللعبة">
+
+      <!-- Game Header -->
+      <div class="game-header">
+        <div class="current-player-box">
+          <div class="player-avatar" id="player-avatar" aria-hidden="true">😎</div>
+          <div class="player-info-box">
+            <h2 id="lbl-current-player">—</h2>
+            <p  id="lbl-turn-info">—</p>
+          </div>
+        </div>
+        <div class="game-hud">
+          <div class="hud-item">
+            <span class="hud-label">⏱️</span>
+            <span id="lbl-timer" class="hud-value">0:00</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">🏅</span>
+            <span id="lbl-points" class="hud-value">0</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">❓</span>
+            <span id="lbl-q-counter" class="hud-value">0/0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="question-wrapper">
+        <div id="q-type-badge" class="q-type-badge" aria-live="polite"></div>
+        <div id="question-card" class="question-card" aria-live="polite" aria-atomic="true">
+          <p id="q-text" class="q-text">…</p>
+          <div class="q-meta">
+            <span id="q-diff-badge"  class="badge">—</span>
+            <span id="q-cat-badge"   class="badge">—</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-grid">
+          <button id="btn-next"   class="btn btn-success"   aria-label="تم الإجابة">✅ تم</button>
+          <button id="btn-skip"   class="btn btn-warning"   aria-label="تخطي">⏭️ تخطي</button>
+          <button id="btn-repeat" class="btn btn-info"      aria-label="إعادة السؤال">🔄 إعادة</button>
+          <button id="btn-custom" class="btn btn-secondary" aria-label="سؤال مخصص">✏️ مخصص</button>
+        </div>
+
+        <!-- Custom Question Input -->
+        <div id="custom-box" class="custom-box hidden" role="dialog" aria-label="أضف سؤالاً مخصصاً">
+          <input id="inp-custom-q"
+                 type="text"
+                 placeholder="اكتب سؤالك الخاص…"
+                 class="fancy-input"
+                 maxlength="250"
+                 aria-label="السؤال المخصص" />
+          <div class="custom-btn-row">
+            <button id="btn-add-custom"    class="btn btn-primary"   aria-label="إضافة السؤال">➕ إضافة</button>
+            <button id="btn-cancel-custom" class="btn btn-secondary" aria-label="إلغاء">❌ إلغاء</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Panels: Chat + Notes -->
+      <div class="bottom-panels">
+
+        <!-- Notes Panel -->
+        <aside class="panel notes-panel" aria-label="الملاحظات السريعة">
+          <h3>📝 ملاحظات</h3>
+          <div id="notes-box" class="scroll-box" role="log" aria-live="polite" aria-label="قائمة الملاحظات"></div>
+          <div class="input-row tight">
+            <input id="inp-note"
+                   type="text"
+                   placeholder="ملاحظة سريعة…"
+                   class="fancy-input"
+                   maxlength="200"
+                   aria-label="ملاحظة جديدة" />
+            <button id="btn-add-note" class="btn btn-primary btn-sm" aria-label="إضافة ملاحظة">➕</button>
+          </div>
+        </aside>
+
+        <!-- Chat Panel -->
+        <aside class="panel chat-panel" aria-label="الدردشة الحية">
+          <h3>💬 دردشة</h3>
+          <div id="chat-box" class="scroll-box" role="log" aria-live="polite" aria-label="رسائل الدردشة"></div>
+          <div class="input-row tight">
+            <input id="inp-chat"
+                   type="text"
+                   placeholder="رسالة…"
+                   class="fancy-input"
+                   maxlength="300"
+                   aria-label="رسالة الدردشة" />
+            <button id="btn-send"   class="btn btn-primary btn-sm"   aria-label="إرسال الرسالة">📤</button>
+            <button id="btn-image"  class="btn btn-secondary btn-sm" aria-label="إرسال صورة" title="صورة">🖼️</button>
+            <button id="btn-record" class="btn btn-secondary btn-sm" aria-label="تسجيل صوتي" title="صوت">🎤</button>
+            <button id="btn-emoji"  class="btn btn-secondary btn-sm" aria-label="إضافة إيموجي" title="إيموجي">😊</button>
+          </div>
+          <!-- Voice/Video Call Bar -->
+          <div class="call-bar">
+            <button id="btn-voice-call" class="call-btn" aria-label="مكالمة صوتية">📞 صوت</button>
+            <button id="btn-video-call" class="call-btn" aria-label="مكالمة مرئية">🎥 فيديو</button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Video Call Overlay -->
+      <div id="call-overlay" class="call-overlay hidden" role="dialog" aria-modal="true" aria-label="مكالمة جارية">
+        <div class="call-inner">
+          <div class="video-grid" id="video-grid">
+            <!-- Video streams injected by JS -->
+          </div>
+          <div class="call-controls">
+            <button id="btn-toggle-mic"   class="call-ctrl-btn" aria-label="كتم الميكروفون">🎤</button>
+            <button id="btn-toggle-cam"   class="call-ctrl-btn" aria-label="إيقاف الكاميرا">📷</button>
+            <button id="btn-end-call"     class="call-ctrl-btn danger" aria-label="إنهاء المكالمة">📵</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Controls -->
+      <div class="game-controls">
+        <button id="btn-pause"       class="btn btn-warning" aria-label="إيقاف مؤقت">⏸️ إيقاف</button>
+        <button id="btn-end-game"    class="btn btn-danger"  aria-label="إنهاء اللعبة">🛑 إنهاء</button>
+        <button id="btn-leaderboard" class="btn btn-info"    aria-label="لوحة النتائج">🏆 النتائج</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SCREEN 3 — RESULTS
+    ════════════════════════════════════════════════ -->
+    <section id="screen-results" class="screen hidden" aria-label="النتائج النهائية">
+      <div class="card results-card">
+        <h2 class="card-title gold">🏆 النتائج النهائية</h2>
+        <div id="leaderboard"   class="leaderboard"     role="list" aria-label="لوحة المتصدرين"></div>
+        <div class="results-stats">
+          <div class="stat-box"><span>⏱️</span><div><small>الوقت</small><b id="res-time">0:00</b></div></div>
+          <div class="stat-box"><span>❓</span><div><small>الأسئلة</small><b id="res-q">0</b></div></div>
+          <div class="stat-box"><span>🎉</span><div><small>نسبة الإجابة</small><b id="res-ratio">0%</b></div></div>
+        </div>
+        <div class="results-actions">
+          <button id="btn-share"  class="btn btn-primary" aria-label="مشاركة النتائج">📤 مشاركة</button>
+          <button id="btn-replay" class="btn btn-success" aria-label="لعبة جديدة">🔄 لعبة جديدة</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         OVERLAY — STATS
+    ════════════════════════════════════════════════ -->
+    <div id="overlay-stats" class="overlay hidden" role="dialog" aria-modal="true" aria-label="الإحصائيات">
+      <div class="overlay-card">
+        <h2>📊 الإحصائيات</h2>
+        <div class="stats-grid">
+          <div class="stat-card"><span>🎮</span><div><small>إجمالي الجلسات</small><b id="st-sessions">0</b></div></div>
+          <div class="stat-card"><span>👑</span><div><small>أفضل لاعب</small>   <b id="st-best">—</b></div></div>
+          <div class="stat-card"><span>⚡</span><div><small>أسرع إجابة</small>  <b id="st-fastest">—</b></div></div>
+          <div class="stat-card"><span>📈</span><div><small>معدل التخطي</small> <b id="st-skip">0%</b></div></div>
+        </div>
+        <button id="btn-close-stats" class="btn btn-secondary" aria-label="إغلاق الإحصائيات">✖️ إغلاق</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         OVERLAY — SETTINGS
+    ════════════════════════════════════════════════ -->
+    <div id="overlay-settings" class="overlay hidden" role="dialog" aria-modal="true" aria-label="الإعدادات">
+      <div class="overlay-card">
+        <h2>⚙️ الإعدادات</h2>
+        <div class="settings-group">
+          <label class="toggle-row">
+            <input type="checkbox" id="tog-sound"    checked aria-label="تفعيل الأصوات" />
+            <span>🔊 الأصوات</span>
+          </label>
+          <label class="toggle-row">
+            <input type="checkbox" id="tog-haptic"   checked aria-label="تفعيل الاهتزازات" />
+            <span>📳 الاهتزازات</span>
+          </label>
+          <label class="toggle-row">
+            <input type="checkbox" id="tog-confetti" checked aria-label="تفعيل الكونفيتي" />
+            <span>🎉 الكونفيتي</span>
+          </label>
+        </div>
+        <div class="settings-group">
+          <label for="range-volume">🔊 مستوى الصوت</label>
+          <input id="range-volume" type="range" min="0" max="100" value="70" class="range-slider" aria-label="مستوى الصوت" />
+        </div>
+        <div class="settings-actions">
+          <button id="btn-clear-data"     class="btn btn-danger"    aria-label="حذف جميع البيانات">🗑️ حذف البيانات</button>
+          <button id="btn-close-settings" class="btn btn-secondary" aria-label="إغلاق الإعدادات">✖️ إغلاق</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         MUSIC PLAYER (FIXED FOOTER)
+    ════════════════════════════════════════════════ -->
+    <footer class="music-bar" role="contentinfo" aria-label="مشغّل الموسيقى">
+      <div class="music-inner">
+        <button id="btn-music-play" class="music-play-btn" aria-label="تشغيل الموسيقى" title="تشغيل / إيقاف">▶️</button>
+        <div class="music-info">
+          <span id="lbl-music-name" class="music-name">Kara Sevda — الحب الأعمى 🎵</span>
+          <div class="music-progress-wrap">
+            <input id="range-music-seek"
+                   type="range" min="0" max="100" value="0" step="0.1"
+                   class="range-slider music-seek"
+                   aria-label="موضع الأغنية" />
+          </div>
+        </div>
+        <input id="range-music-vol"
+               type="range" min="0" max="100" value="25"
+               class="range-slider music-vol"
+               aria-label="مستوى صوت الموسيقى"
+               title="الصوت" />
+        <select id="sel-music-track" class="fancy-select music-select" aria-label="اختر المقطوعة">
+          <option value="kara-sevda">💔 Kara Sevda</option>
+          <option value="ambient">🌙 هادئة</option>
+          <option value="romantic">💕 رومانسية</option>
+          <option value="epic">⚡ ملحمية</option>
+        </select>
+      </div>
+    </footer>
+
+  </div><!-- /#app -->
+
+  <!-- Hidden file input for image upload -->
+  <input id="file-image-input" type="file" accept="image/*" hidden aria-hidden="true" />
+
+  <!-- Audio elements -->
+  <audio id="audio-music"  loop preload="none" aria-hidden="true"></audio>
+  <audio id="audio-sfx"    preload="auto"      aria-hidden="true"></audio>
+
+  <!-- Scripts -->
+  <script src="questions.js"></script>
+  <script src="bg.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
