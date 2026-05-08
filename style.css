@@ -1,375 +1,987 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0a0a1a" />
-  <meta name="description" content="الحقيقة أو التحدي - النسخة الأسطورية الخرافية" />
-  <title>🔥 الحقيقة أو التحدي — النسخة الأسطورية</title>
+/* ============================================
+   PULSE PARTY ULTRA - PRO EDITION
+   styles.css - التصميم المتقدم والأنيميشنات
+   ============================================ */
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+:root {
+  /* ألوان أساسية */
+  --primary: #8b5cf6;
+  --secondary: #ec4899;
+  --success: #34d399;
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --info: #60a5fa;
+  --dark: #1a1a2e;
+  --darker: #0f0f1e;
+  --light: #f8f9fa;
+  
+  /* تدرجات */
+  --gradient-primary: linear-gradient(135deg, #8b5cf6, #ec4899);
+  --gradient-dark: linear-gradient(135deg, #1e3a8a, #7e22ce, #ec4899);
+  --gradient-gold: linear-gradient(135deg, #fbbf24, #f97316);
+  
+  /* ظلال */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+  --shadow-xl: 0 12px 32px rgba(0,0,0,0.3);
+  
+  /* انتقالات */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body data-theme="dark" data-bg="ocean">
+/* ==================== Reset & Base ====================*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  <!-- ═══════════════════════════════════════════════
-       CANVAS LAYERS
-  ════════════════════════════════════════════════ -->
-  <canvas id="bg-canvas"      aria-hidden="true"></canvas>
-  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+html {
+  scroll-behavior: smooth;
+}
 
-  <!-- ═══════════════════════════════════════════════
-       MAIN CONTAINER
-  ════════════════════════════════════════════════ -->
-  <div id="app">
+body {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  background: var(--gradient-dark);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
 
-    <!-- ───────── TOP NAV ───────── -->
-    <nav class="top-nav" role="navigation" aria-label="شريط التنقل الرئيسي">
-      <div class="nav-logo">
-        <span class="logo-fire">🔥</span>
-        <div class="logo-text">
-          <h1>الحقيقة أو التحدي</h1>
-          <p>النسخة الأسطورية الخرافية ✨</p>
-        </div>
-      </div>
-      <div class="nav-controls" role="toolbar" aria-label="أدوات التحكم">
-        <button id="btn-bg-cycle"    class="nav-btn" title="تغيير الخلفية"  aria-label="تغيير الخلفية">🌅</button>
-        <button id="btn-theme"       class="nav-btn" title="تبديل المظهر"   aria-label="تبديل المظهر">🌙</button>
-        <button id="btn-stats"       class="nav-btn" title="الإحصائيات"     aria-label="الإحصائيات">📊</button>
-        <button id="btn-settings"    class="nav-btn" title="الإعدادات"      aria-label="الإعدادات">⚙️</button>
-      </div>
-    </nav>
+body.light-mode {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  color: #1a1a2e;
+}
 
-    <!-- ═══════════════════════════════════════════════
-         SCREEN 1 — SETUP
-    ════════════════════════════════════════════════ -->
-    <section id="screen-setup" class="screen active" aria-label="إعداد اللعبة">
-      <div class="card setup-card">
+/* ==================== الخلفيات المتحركة ====================*/
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
 
-        <h2 class="card-title">⚙️ إعداد اللاعبين</h2>
+/* محيط متموج */
+.bg-ocean {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 30%, #2d1b69 60%, #3d0e6b 100%);
+  animation: oceanFlow 15s infinite ease-in-out;
+}
 
-        <!-- Add Player -->
-        <div class="input-row">
-          <input id="inp-player-name"
-                 type="text"
-                 placeholder="اسم اللاعب…"
-                 class="fancy-input"
-                 maxlength="30"
-                 autocomplete="off"
-                 aria-label="اسم اللاعب" />
-          <button id="btn-add-player" class="btn btn-primary" aria-label="إضافة لاعب">➕ إضافة</button>
-        </div>
+.bg-ocean::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(138, 43, 226, 0.1) 2px,
+      rgba(138, 43, 226, 0.1) 4px
+    );
+  animation: wave 8s linear infinite;
+}
 
-        <div id="players-list" class="players-list" role="list" aria-label="قائمة اللاعبين" aria-live="polite"></div>
+.bg-ocean::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to top, rgba(25, 25, 50, 0.8), transparent);
+  animation: waterRise 10s infinite ease-in-out;
+}
 
-        <!-- Game Mode -->
-        <div class="mode-section">
-          <h3 class="sub-title">🎮 وضع اللعبة</h3>
-          <div class="mode-grid" role="radiogroup" aria-label="وضع اللعبة">
-            <button class="mode-btn active" data-mode="classic"  role="radio" aria-checked="true">
-              <span class="mode-icon">👥</span><span>كلاسيكي</span>
-            </button>
-            <button class="mode-btn"        data-mode="team"     role="radio" aria-checked="false">
-              <span class="mode-icon">🤝</span><span>فريق</span>
-            </button>
-            <button class="mode-btn"        data-mode="chaos"    role="radio" aria-checked="false">
-              <span class="mode-icon">⚡</span><span>فوضى</span>
-            </button>
-          </div>
-        </div>
+@keyframes oceanFlow {
+  0%, 100% {
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 30%, #2d1b69 60%, #3d0e6b 100%);
+  }
+  50% {
+    background: linear-gradient(135deg, #1a0a2e 0%, #2a2a4e 30%, #3d1b79 60%, #4d0e7b 100%);
+  }
+}
 
-        <!-- Options Grid -->
-        <div class="options-grid">
-          <label class="option-block">
-            <span>🎲 نوع السؤال</span>
-            <select id="sel-q-type" class="fancy-select" aria-label="نوع السؤال">
-              <option value="random">🎲 عشوائي</option>
-              <option value="truth">🤔 حقيقة فقط</option>
-              <option value="dare">🔥 تحدي فقط</option>
-              <option value="romantic">💕 رومانسي</option>
-              <option value="funny">😂 مرح</option>
-              <option value="deep">🧠 فلسفي عميق</option>
-            </select>
-          </label>
+@keyframes wave {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
-          <label class="option-block">
-            <span>💪 مستوى الصعوبة</span>
-            <select id="sel-difficulty" class="fancy-select" aria-label="مستوى الصعوبة">
-              <option value="easy">😊 سهل</option>
-              <option value="medium">😏 متوسط</option>
-              <option value="hard">🔥 صعب</option>
-              <option value="extreme">⚡ قاسي</option>
-              <option value="legendary">👑 أسطوري</option>
-            </select>
-          </label>
+@keyframes waterRise {
+  0%, 100% { height: 40%; }
+  50% { height: 50%; }
+}
 
-          <label class="option-block">
-            <span>⏱️ عدد الأسئلة</span>
-            <input id="inp-q-count"
-                   type="number"
-                   min="5" max="100" value="20"
-                   class="fancy-input"
-                   aria-label="عدد الأسئلة" />
-          </label>
+/* جزيئات عائمة */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
 
-          <label class="option-block">
-            <span>🚀 سرعة اللعبة</span>
-            <select id="sel-speed" class="fancy-select" aria-label="سرعة اللعبة">
-              <option value="slow">🐢 بطيء</option>
-              <option value="normal" selected>⏱️ عادي</option>
-              <option value="fast">⚡ سريع</option>
-              <option value="crazy">🚀 مجنون</option>
-            </select>
-          </label>
-        </div>
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(138, 43, 226, 0.5);
+  border-radius: 50%;
+  animation: float 20s infinite ease-in-out;
+}
 
-        <button id="btn-start" class="btn btn-start" aria-label="ابدأ اللعبة">
-          <span class="btn-icon">🎲</span>
-          <span>ابدأ اللعبة الآن!</span>
-        </button>
-      </div>
-    </section>
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(100px);
+    opacity: 0;
+  }
+}
 
-    <!-- ═══════════════════════════════════════════════
-         SCREEN 2 — GAME
-    ════════════════════════════════════════════════ -->
-    <section id="screen-game" class="screen hidden" aria-label="اللعبة">
+/* نجوم متلألئة */
+.stars-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
 
-      <!-- Game Header -->
-      <div class="game-header">
-        <div class="current-player-box">
-          <div class="player-avatar" id="player-avatar" aria-hidden="true">😎</div>
-          <div class="player-info-box">
-            <h2 id="lbl-current-player">—</h2>
-            <p  id="lbl-turn-info">—</p>
-          </div>
-        </div>
-        <div class="game-hud">
-          <div class="hud-item">
-            <span class="hud-label">⏱️</span>
-            <span id="lbl-timer" class="hud-value">0:00</span>
-          </div>
-          <div class="hud-item">
-            <span class="hud-label">🏅</span>
-            <span id="lbl-points" class="hud-value">0</span>
-          </div>
-          <div class="hud-item">
-            <span class="hud-label">❓</span>
-            <span id="lbl-q-counter" class="hud-value">0/0</span>
-          </div>
-        </div>
-      </div>
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+}
 
-      <!-- Question Card -->
-      <div class="question-wrapper">
-        <div id="q-type-badge" class="q-type-badge" aria-live="polite"></div>
-        <div id="question-card" class="question-card" aria-live="polite" aria-atomic="true">
-          <p id="q-text" class="q-text">…</p>
-          <div class="q-meta">
-            <span id="q-diff-badge"  class="badge">—</span>
-            <span id="q-cat-badge"   class="badge">—</span>
-          </div>
-        </div>
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
 
-        <!-- Action Buttons -->
-        <div class="action-grid">
-          <button id="btn-next"   class="btn btn-success"   aria-label="تم الإجابة">✅ تم</button>
-          <button id="btn-skip"   class="btn btn-warning"   aria-label="تخطي">⏭️ تخطي</button>
-          <button id="btn-repeat" class="btn btn-info"      aria-label="إعادة السؤال">🔄 إعادة</button>
-          <button id="btn-custom" class="btn btn-secondary" aria-label="سؤال مخصص">✏️ مخصص</button>
-        </div>
+/* ==================== الحاوية الرئيسية ====================*/
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-        <!-- Custom Question Input -->
-        <div id="custom-box" class="custom-box hidden" role="dialog" aria-label="أضف سؤالاً مخصصاً">
-          <input id="inp-custom-q"
-                 type="text"
-                 placeholder="اكتب سؤالك الخاص…"
-                 class="fancy-input"
-                 maxlength="250"
-                 aria-label="السؤال المخصص" />
-          <div class="custom-btn-row">
-            <button id="btn-add-custom"    class="btn btn-primary"   aria-label="إضافة السؤال">➕ إضافة</button>
-            <button id="btn-cancel-custom" class="btn btn-secondary" aria-label="إلغاء">❌ إلغاء</button>
-          </div>
-        </div>
-      </div>
+/* ==================== الشريط العلوي ====================*/
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideDown 0.6s ease-out;
+  box-shadow: var(--shadow-lg);
+}
 
-      <!-- Bottom Panels: Chat + Notes -->
-      <div class="bottom-panels">
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-        <!-- Notes Panel -->
-        <aside class="panel notes-panel" aria-label="الملاحظات السريعة">
-          <h3>📝 ملاحظات</h3>
-          <div id="notes-box" class="scroll-box" role="log" aria-live="polite" aria-label="قائمة الملاحظات"></div>
-          <div class="input-row tight">
-            <input id="inp-note"
-                   type="text"
-                   placeholder="ملاحظة سريعة…"
-                   class="fancy-input"
-                   maxlength="200"
-                   aria-label="ملاحظة جديدة" />
-            <button id="btn-add-note" class="btn btn-primary btn-sm" aria-label="إضافة ملاحظة">➕</button>
-          </div>
-        </aside>
+.logo-section h1 {
+  font-size: 2.5em;
+  font-weight: 900;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 5px;
+  animation: glow 3s ease-in-out infinite;
+  letter-spacing: 2px;
+}
 
-        <!-- Chat Panel -->
-        <aside class="panel chat-panel" aria-label="الدردشة الحية">
-          <h3>💬 دردشة</h3>
-          <div id="chat-box" class="scroll-box" role="log" aria-live="polite" aria-label="رسائل الدردشة"></div>
-          <div class="input-row tight">
-            <input id="inp-chat"
-                   type="text"
-                   placeholder="رسالة…"
-                   class="fancy-input"
-                   maxlength="300"
-                   aria-label="رسالة الدردشة" />
-            <button id="btn-send"   class="btn btn-primary btn-sm"   aria-label="إرسال الرسالة">📤</button>
-            <button id="btn-image"  class="btn btn-secondary btn-sm" aria-label="إرسال صورة" title="صورة">🖼️</button>
-            <button id="btn-record" class="btn btn-secondary btn-sm" aria-label="تسجيل صوتي" title="صوت">🎤</button>
-            <button id="btn-emoji"  class="btn btn-secondary btn-sm" aria-label="إضافة إيموجي" title="إيموجي">😊</button>
-          </div>
-          <!-- Voice/Video Call Bar -->
-          <div class="call-bar">
-            <button id="btn-voice-call" class="call-btn" aria-label="مكالمة صوتية">📞 صوت</button>
-            <button id="btn-video-call" class="call-btn" aria-label="مكالمة مرئية">🎥 فيديو</button>
-          </div>
-        </aside>
-      </div>
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6));
+  }
+}
 
-      <!-- Video Call Overlay -->
-      <div id="call-overlay" class="call-overlay hidden" role="dialog" aria-modal="true" aria-label="مكالمة جارية">
-        <div class="call-inner">
-          <div class="video-grid" id="video-grid">
-            <!-- Video streams injected by JS -->
-          </div>
-          <div class="call-controls">
-            <button id="btn-toggle-mic"   class="call-ctrl-btn" aria-label="كتم الميكروفون">🎤</button>
-            <button id="btn-toggle-cam"   class="call-ctrl-btn" aria-label="إيقاف الكاميرا">📷</button>
-            <button id="btn-end-call"     class="call-ctrl-btn danger" aria-label="إنهاء المكالمة">📵</button>
-          </div>
-        </div>
-      </div>
+.logo-section .tagline {
+  font-size: 1em;
+  opacity: 0.8;
+}
 
-      <!-- Game Controls -->
-      <div class="game-controls">
-        <button id="btn-pause"       class="btn btn-warning" aria-label="إيقاف مؤقت">⏸️ إيقاف</button>
-        <button id="btn-end-game"    class="btn btn-danger"  aria-label="إنهاء اللعبة">🛑 إنهاء</button>
-        <button id="btn-leaderboard" class="btn btn-info"    aria-label="لوحة النتائج">🏆 النتائج</button>
-      </div>
-    </section>
+.controls {
+  display: flex;
+  gap: 10px;
+}
 
-    <!-- ═══════════════════════════════════════════════
-         SCREEN 3 — RESULTS
-    ════════════════════════════════════════════════ -->
-    <section id="screen-results" class="screen hidden" aria-label="النتائج النهائية">
-      <div class="card results-card">
-        <h2 class="card-title gold">🏆 النتائج النهائية</h2>
-        <div id="leaderboard"   class="leaderboard"     role="list" aria-label="لوحة المتصدرين"></div>
-        <div class="results-stats">
-          <div class="stat-box"><span>⏱️</span><div><small>الوقت</small><b id="res-time">0:00</b></div></div>
-          <div class="stat-box"><span>❓</span><div><small>الأسئلة</small><b id="res-q">0</b></div></div>
-          <div class="stat-box"><span>🎉</span><div><small>نسبة الإجابة</small><b id="res-ratio">0%</b></div></div>
-        </div>
-        <div class="results-actions">
-          <button id="btn-share"  class="btn btn-primary" aria-label="مشاركة النتائج">📤 مشاركة</button>
-          <button id="btn-replay" class="btn btn-success" aria-label="لعبة جديدة">🔄 لعبة جديدة</button>
-        </div>
-      </div>
-    </section>
+.control-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    <!-- ═══════════════════════════════════════════════
-         OVERLAY — STATS
-    ════════════════════════════════════════════════ -->
-    <div id="overlay-stats" class="overlay hidden" role="dialog" aria-modal="true" aria-label="الإحصائيات">
-      <div class="overlay-card">
-        <h2>📊 الإحصائيات</h2>
-        <div class="stats-grid">
-          <div class="stat-card"><span>🎮</span><div><small>إجمالي الجلسات</small><b id="st-sessions">0</b></div></div>
-          <div class="stat-card"><span>👑</span><div><small>أفضل لاعب</small>   <b id="st-best">—</b></div></div>
-          <div class="stat-card"><span>⚡</span><div><small>أسرع إجابة</small>  <b id="st-fastest">—</b></div></div>
-          <div class="stat-card"><span>📈</span><div><small>معدل التخطي</small> <b id="st-skip">0%</b></div></div>
-        </div>
-        <button id="btn-close-stats" class="btn btn-secondary" aria-label="إغلاق الإحصائيات">✖️ إغلاق</button>
-      </div>
-    </div>
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1) rotate(5deg);
+}
 
-    <!-- ═══════════════════════════════════════════════
-         OVERLAY — SETTINGS
-    ════════════════════════════════════════════════ -->
-    <div id="overlay-settings" class="overlay hidden" role="dialog" aria-modal="true" aria-label="الإعدادات">
-      <div class="overlay-card">
-        <h2>⚙️ الإعدادات</h2>
-        <div class="settings-group">
-          <label class="toggle-row">
-            <input type="checkbox" id="tog-sound"    checked aria-label="تفعيل الأصوات" />
-            <span>🔊 الأصوات</span>
-          </label>
-          <label class="toggle-row">
-            <input type="checkbox" id="tog-haptic"   checked aria-label="تفعيل الاهتزازات" />
-            <span>📳 الاهتزازات</span>
-          </label>
-          <label class="toggle-row">
-            <input type="checkbox" id="tog-confetti" checked aria-label="تفعيل الكونفيتي" />
-            <span>🎉 الكونفيتي</span>
-          </label>
-        </div>
-        <div class="settings-group">
-          <label for="range-volume">🔊 مستوى الصوت</label>
-          <input id="range-volume" type="range" min="0" max="100" value="70" class="range-slider" aria-label="مستوى الصوت" />
-        </div>
-        <div class="settings-actions">
-          <button id="btn-clear-data"     class="btn btn-danger"    aria-label="حذف جميع البيانات">🗑️ حذف البيانات</button>
-          <button id="btn-close-settings" class="btn btn-secondary" aria-label="إغلاق الإعدادات">✖️ إغلاق</button>
-        </div>
-      </div>
-    </div>
+/* ==================== الأقسام ====================*/
+.section {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  animation: fadeIn 0.6s ease-out;
+}
 
-    <!-- ═══════════════════════════════════════════════
-         MUSIC PLAYER (FIXED FOOTER)
-    ════════════════════════════════════════════════ -->
-    <footer class="music-bar" role="contentinfo" aria-label="مشغّل الموسيقى">
-      <div class="music-inner">
-        <button id="btn-music-play" class="music-play-btn" aria-label="تشغيل الموسيقى" title="تشغيل / إيقاف">▶️</button>
-        <div class="music-info">
-          <span id="lbl-music-name" class="music-name">Kara Sevda — الحب الأعمى 🎵</span>
-          <div class="music-progress-wrap">
-            <input id="range-music-seek"
-                   type="range" min="0" max="100" value="0" step="0.1"
-                   class="range-slider music-seek"
-                   aria-label="موضع الأغنية" />
-          </div>
-        </div>
-        <input id="range-music-vol"
-               type="range" min="0" max="100" value="25"
-               class="range-slider music-vol"
-               aria-label="مستوى صوت الموسيقى"
-               title="الصوت" />
-        <select id="sel-music-track" class="fancy-select music-select" aria-label="اختر المقطوعة">
-          <option value="kara-sevda">💔 Kara Sevda</option>
-          <option value="ambient">🌙 هادئة</option>
-          <option value="romantic">💕 رومانسية</option>
-          <option value="epic">⚡ ملحمية</option>
-        </select>
-      </div>
-    </footer>
+.section.hidden {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  visibility: hidden;
+}
 
-  </div><!-- /#app -->
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  <!-- Hidden file input for image upload -->
-  <input id="file-image-input" type="file" accept="image/*" hidden aria-hidden="true" />
+/* قسم الإعداد */
+#setup-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-  <!-- Audio elements -->
-  <audio id="audio-music"  loop preload="none" aria-hidden="true"></audio>
-  <audio id="audio-sfx"    preload="auto"      aria-hidden="true"></audio>
+.setup-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.6s ease-out;
+}
 
-  <!-- Scripts -->
-  <script src="questions.js"></script>
-  <script src="bg.js"></script>
-  <script src="script.js"></script>
-</body>
-</html>
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-title {
+  font-size: 2em;
+  margin-bottom: 25px;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+}
+
+/* ==================== إدارة اللاعبين ====================*/
+.players-setup {
+  margin-bottom: 30px;
+}
+
+.players-setup h3 {
+  margin-bottom: 10px;
+  opacity: 0.9;
+  font-size: 1.1em;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  color: white;
+  font-size: 1em;
+  font-family: 'Cairo', sans-serif;
+  transition: var(--transition);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.input-group button {
+  padding: 12px 24px;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Cairo', sans-serif;
+  font-size: 1em;
+}
+
+.input-group button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+}
+
+.input-group button:active {
+  transform: translateY(-1px);
+}
+
+.players-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+  min-height: 50px;
+}
+
+.player-chip {
+  background: var(--gradient-primary);
+  padding: 12px 16px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideIn 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.player-chip span:last-child {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.2em;
+  transition: var(--transition);
+}
+
+.player-chip span:last-child:hover {
+  transform: scale(1.3) rotate(90deg);
+}
+
+/* ==================== اختيار الوضع ====================*/
+.mode-selector {
+  margin: 25px 0;
+}
+
+.mode-selector h3 {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+.mode-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.mode-btn {
+  padding: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  color: white;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 600;
+}
+
+.mode-btn:hover {
+  border-color: var(--primary);
+  background: rgba(139, 92, 246, 0.2);
+  transform: translateY(-5px);
+}
+
+.mode-btn.active {
+  background: var(--gradient-primary);
+  border-color: var(--primary);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+}
+
+.mode-icon {
+  font-size: 1.8em;
+}
+
+/* ==================== خيارات اللعبة ====================*/
+.game-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-card label {
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+.option-card select,
+.option-card input {
+  padding: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: white;
+  font-family: 'Cairo', sans-serif;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 1em;
+}
+
+.option-card select:focus,
+.option-card input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+}
+
+.option-card select option {
+  background: var(--darker);
+  color: white;
+}
+
+/* ==================== زر البداية ====================*/
+#start-btn {
+  width: 100%;
+  padding: 20px;
+  font-size: 1.3em;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+  transition: var(--transition);
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+#start-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
+}
+
+#start-btn:active {
+  transform: translateY(-1px);
+}
+
+/* ==================== أقسام اللعبة والنتائج ====================*/
+#game-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 80px;
+}
+
+#results-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 80px;
+}
+
+/* ==================== مشغل الموسيقى ====================*/
+.music-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 20px;
+  z-index: 100;
+}
+
+.music-player {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.music-btn {
+  font-size: 1.2em;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.music-btn:hover {
+  transform: scale(1.2);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.music-label {
+  font-size: 0.9em;
+  min-width: 100px;
+  font-weight: 600;
+}
+
+.music-player input[type="range"] {
+  width: 100px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.music-player input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+  transition: var(--transition);
+}
+
+.music-player input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.7);
+}
+
+.music-player input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+  transition: var(--transition);
+}
+
+.music-player select {
+  width: 150px;
+  padding: 8px;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.music-player select:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.music-player select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+}
+
+.music-player select option {
+  background: var(--darker);
+  color: white;
+}
+
+/* ==================== عنصر الصوت ====================*/
+audio {
+  display: none;
+}
+
+/* ==================== Canvas للتأثيرات ====================*/
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* ==================== الإخطارات ====================*/
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 600;
+  z-index: 1000;
+  animation: slideInNotif 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideInNotif {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.notification-success {
+  background: var(--success);
+  color: white;
+}
+
+.notification-warning {
+  background: var(--warning);
+  color: #1a1a2e;
+}
+
+.notification-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.notification-info {
+  background: var(--info);
+  color: white;
+}
+
+/* ==================== الحالات الخاصة ====================*/
+.hidden {
+  display: none !important;
+}
+
+.recording {
+  background: var(--danger);
+  animation: pulse 0.5s ease-in-out infinite !important;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ==================== الاستجابة ====================*/
+@media (max-width: 768px) {
+  .logo-section h1 {
+    font-size: 1.8em;
+  }
+
+  .top-nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .setup-card {
+    padding: 20px;
+  }
+
+  .game-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .music-player {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .music-player input[type="range"],
+  .music-player select {
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: 1.5em;
+  }
+
+  .container {
+    width: 98%;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-section h1 {
+    font-size: 1.4em;
+  }
+
+  .setup-card {
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  .input-group button {
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: 1.3em;
+  }
+
+  .top-nav {
+    padding: 15px;
+  }
+
+  .controls {
+    gap: 5px;
+  }
+
+  .control-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1em;
+  }
+}
+
+/* ==================== الوضع الفاتح ====================*/
+body.light-mode .setup-card {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .input-group input {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #1a1a2e;
+}
+
+body.light-mode .input-group input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+body.light-mode .input-group input:focus {
+  background: rgba(139, 92, 246, 0.15);
+}
+
+body.light-mode .top-nav {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .mode-btn {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.05);
+  color: #1a1a2e;
+}
+
+body.light-mode .mode-btn:hover {
+  background: rgba(139, 92, 246, 0.15);
+}
+
+body.light-mode .music-footer {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+body.light-mode .music-btn {
+  color: #1a1a2e;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .music-label {
+  color: #1a1a2e;
+}
+
+body.light-mode .music-player input[type="range"] {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+body.light-mode .music-player select {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #1a1a2e;
+}
+
+body.light-mode .music-player select option {
+  background: #f8f9fa;
+  color: #1a1a2e;
+}
+
+/* ==================== تأثيرات إضافية ====================*/
+/* بريق التحويم */
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* رجة */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+/* سقوط */
+@keyframes drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.drop {
+  animation: drop 0.5s ease-out;
+}
+
+/* ==================== تقليل الحركة ====================*/
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==================== Print Styles ====================*/
+@media print {
+  .top-nav,
+  .music-footer,
+  .controls {
+    display: none !important;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+}

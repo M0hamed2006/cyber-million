@@ -4,74 +4,730 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#8b5cf6">
-  <title>🔥 الحقيقة أو التحدي - النسخة الأسطورية الخرافية 🎭</title>
-  <link rel="stylesheet" href="style.css">
+  <title>🔥 الحقيقة أو التحدي - Pro Edition 🎭</title>
+  
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Styles - سيتم ربطها لاحقاً -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* Inline Base Styles - للبدء السريع */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      background: #0f0f1e;
+    }
+
+    /* Animated Backgrounds Container */
+    .background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* تم إضافة الخلفيات المتحركة هنا */
+    .bg-ocean {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 30%, #2d1b69 60%, #3d0e6b 100%);
+      animation: oceanFlow 15s infinite ease-in-out;
+    }
+
+    .bg-ocean::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          rgba(138, 43, 226, 0.1) 2px,
+          rgba(138, 43, 226, 0.1) 4px
+        );
+      animation: wave 8s linear infinite;
+    }
+
+    .bg-ocean::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: linear-gradient(to top, rgba(25, 25, 50, 0.8), transparent);
+      animation: waterRise 10s infinite ease-in-out;
+    }
+
+    @keyframes oceanFlow {
+      0%, 100% {
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 30%, #2d1b69 60%, #3d0e6b 100%);
+      }
+      50% {
+        background: linear-gradient(135deg, #1a0a2e 0%, #2a2a4e 30%, #3d1b79 60%, #4d0e7b 100%);
+      }
+    }
+
+    @keyframes wave {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes waterRise {
+      0%, 100% { height: 40%; }
+      50% { height: 50%; }
+    }
+
+    /* Floating Particles */
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(138, 43, 226, 0.5);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+      }
+    }
+
+    /* Stars */
+    .stars-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Main Container */
+    .container {
+      width: 95%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-section h1 {
+      font-size: 2.5em;
+      font-weight: 900;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 5px;
+      animation: glow 3s ease-in-out infinite;
+      letter-spacing: 2px;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.3));
+      }
+      50% {
+        filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6));
+      }
+    }
+
+    .tagline {
+      font-size: 1em;
+      opacity: 0.8;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .control-btn {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      font-size: 1.2em;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .control-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    /* Sections */
+    .section {
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .section.hidden {
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      visibility: hidden;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Setup Section */
+    #setup-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .setup-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      font-size: 2em;
+      margin-bottom: 25px;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .players-setup {
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      color: white;
+      font-size: 1em;
+      font-family: 'Cairo', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      background: rgba(139, 92, 246, 0.1);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .input-group input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .input-group button {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    .input-group button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+    }
+
+    .players-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 15px 0;
+      min-height: 50px;
+    }
+
+    .player-chip {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      padding: 12px 16px;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: slideIn 0.3s ease-out;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .player-chip span {
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    /* Mode Selector */
+    .mode-selector {
+      margin: 25px 0;
+    }
+
+    .mode-selector h3 {
+      margin-bottom: 15px;
+      font-size: 1.1em;
+    }
+
+    .mode-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .mode-btn {
+      padding: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      color: white;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 600;
+    }
+
+    .mode-btn:hover {
+      border-color: #8b5cf6;
+      background: rgba(139, 92, 246, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .mode-btn.active {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      border-color: #8b5cf6;
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    .mode-icon {
+      font-size: 1.8em;
+    }
+
+    /* Game Options Grid */
+    .game-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .option-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-card label {
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+
+    .option-card select,
+    .option-card input {
+      padding: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      color: white;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .option-card select:focus,
+    .option-card input:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      background: rgba(139, 92, 246, 0.1);
+    }
+
+    .option-card select option {
+      background: #1a1a2e;
+      color: white;
+    }
+
+    /* Start Button */
+    #start-btn {
+      width: 100%;
+      padding: 20px;
+      font-size: 1.3em;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    #start-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
+    }
+
+    /* Audio Element */
+    audio {
+      display: none;
+    }
+
+    /* Canvas for Effects */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    /* Game Section - سيتم تطويره */
+    #game-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Results Section - سيتم تطويره */
+    #results-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Music Player Footer */
+    .music-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 20px;
+      z-index: 100;
+    }
+
+    .music-player {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .music-btn {
+      font-size: 1.2em;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .music-btn:hover {
+      transform: scale(1.2);
+    }
+
+    .music-label {
+      font-size: 0.9em;
+      min-width: 100px;
+    }
+
+    .music-player input[type="range"] {
+      width: 100px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .music-player input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    }
+
+    .music-player input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    }
+
+    .music-player select {
+      width: 150px;
+      padding: 8px;
+      font-size: 0.9em;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      border-radius: 8px;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+    }
+
+    .music-player select option {
+      background: #1a1a2e;
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .logo-section h1 {
+        font-size: 1.8em;
+      }
+
+      .top-nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .controls {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .setup-card {
+        padding: 20px;
+      }
+
+      .game-options-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mode-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .music-player {
+        flex-wrap: wrap;
+      }
+
+      .music-player input[type="range"],
+      .music-player select {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="stars"></div>
+  <!-- Animated Background -->
+  <div class="background-container">
+    <div class="bg-ocean"></div>
+    <div class="particles" id="particles-container"></div>
+    <div class="stars-container" id="stars-container"></div>
+  </div>
+
+  <!-- Main Container -->
   <div class="container">
-    <!-- الشريط العلوي -->
+    <!-- Top Navigation -->
     <nav class="top-nav">
       <div class="logo-section">
-        <h1 class="logo animated-logo">🔥 الحقيقة أو التحدي 🎭</h1>
-        <p class="tagline">النسخة الخرافية الأسطورية - احصل على الأجواء المذهلة!</p>
+        <h1>🔥 الحقيقة أو التحدي 🎭</h1>
+        <p class="tagline">Pro Edition - النسخة الاحترافية الخرافية</p>
       </div>
       <div class="controls">
-        <button id="theme-toggle" class="theme-btn" title="تبديل المظهر">🌙</button>
-        <button id="stats-btn" class="stats-btn" title="الإحصائيات">📊</button>
-        <button id="settings-btn" class="settings-btn" title="الإعدادات">⚙️</button>
+        <button class="control-btn" id="theme-toggle" title="تبديل المظهر">🌙</button>
+        <button class="control-btn" id="stats-btn" title="الإحصائيات">📊</button>
+        <button class="control-btn" id="settings-btn" title="الإعدادات">⚙️</button>
       </div>
     </nav>
 
-    <!-- القسم الرئيسي - إعداد اللعبة -->
-    <section id="setup-section" class="setup-section">
+    <!-- Setup Section -->
+    <section id="setup-section" class="section">
       <div class="setup-card">
-        <h2 class="section-title">⚙️ إعداد اللاعبون</h2>
+        <h2 class="section-title">⚙️ إعداد اللعبة</h2>
         
-        <!-- إضافة اللاعبين -->
+        <!-- Players Setup -->
         <div class="players-setup">
+          <h3 style="margin-bottom: 10px; opacity: 0.9;">👥 اللاعبون</h3>
           <div class="input-group">
             <input 
               id="player-name" 
               type="text" 
               placeholder="أدخل اسم اللاعب..." 
-              class="fancy-input"
               autocomplete="off"
             />
-            <button id="add-player-btn" class="btn btn-primary">➕ إضافة لاعب</button>
+            <button id="add-player-btn">➕ إضافة</button>
           </div>
-          <div id="players-list" class="players-list animated-list"></div>
-          
-          <!-- وضع اللعبة -->
-          <div class="mode-selector">
-            <h3>🎮 اختر وضع اللعبة</h3>
-            <div class="mode-buttons">
-              <button class="mode-btn active" data-mode="classic">
-                <span class="mode-icon">👥</span>
-                <span>الوضع الكلاسيكي</span>
-              </button>
-              <button class="mode-btn" data-mode="team">
-                <span class="mode-icon">🤝</span>
-                <span>وضع الفريق</span>
-              </button>
-              <button class="mode-btn" data-mode="chaos">
-                <span class="mode-icon">⚡</span>
-                <span>وضع الفوضى</span>
-              </button>
-            </div>
+          <div id="players-list" class="players-list"></div>
+        </div>
+
+        <!-- Game Mode -->
+        <div class="mode-selector">
+          <h3>🎮 وضع اللعبة</h3>
+          <div class="mode-buttons">
+            <button class="mode-btn active" data-mode="classic">
+              <span class="mode-icon">👥</span>
+              <span>الوضع الكلاسيكي</span>
+            </button>
+            <button class="mode-btn" data-mode="team">
+              <span class="mode-icon">🤝</span>
+              <span>وضع الفريق</span>
+            </button>
+            <button class="mode-btn" data-mode="chaos">
+              <span class="mode-icon">⚡</span>
+              <span>وضع الفوضى</span>
+            </button>
           </div>
         </div>
 
-        <!-- خيارات اللعبة -->
+        <!-- Game Options -->
         <div class="game-options-grid">
           <div class="option-card">
             <label>🎲 نوع السؤال</label>
-            <select id="question-type" class="fancy-select">
-              <option value="random">🎲 عشوائي (حقيقة/تحدي)</option>
+            <select id="question-type">
+              <option value="random">🎲 عشوائي</option>
               <option value="truth">🤔 الحقيقة فقط</option>
               <option value="dare">🔥 التحدي فقط</option>
-              <option value="dirty">🌶️ جرء جداً (للبالغين)</option>
               <option value="romantic">💕 رومانسي</option>
               <option value="funny">😂 مرح</option>
             </select>
@@ -79,23 +735,23 @@
 
           <div class="option-card">
             <label>💪 مستوى الصعوبة</label>
-            <select id="difficulty" class="fancy-select">
-              <option value="easy">😊 سهل (بريء)</option>
-              <option value="medium">😏 متوسط (مثير)</option>
-              <option value="hard">🔥 صعب (عميق)</option>
-              <option value="extreme">⚡ قاسي (نفسي)</option>
-              <option value="legendary">👑 أسطوري (خرافي)</option>
+            <select id="difficulty">
+              <option value="easy">😊 سهل</option>
+              <option value="medium">😏 متوسط</option>
+              <option value="hard">🔥 صعب</option>
+              <option value="extreme">⚡ قاسي</option>
+              <option value="legendary">👑 أسطوري</option>
             </select>
           </div>
 
           <div class="option-card">
             <label>⏱️ عدد الأسئلة</label>
-            <input id="questions-count" type="number" min="5" max="100" value="20" class="fancy-input">
+            <input id="questions-count" type="number" min="5" max="100" value="20">
           </div>
 
           <div class="option-card">
             <label>⚙️ سرعة اللعبة</label>
-            <select id="game-speed" class="fancy-select">
+            <select id="game-speed">
               <option value="slow">🐢 بطيء</option>
               <option value="normal">⏱️ عادي</option>
               <option value="fast">⚡ سريع</option>
@@ -104,244 +760,79 @@
           </div>
         </div>
 
-        <!-- زر البداية -->
-        <button id="start-btn" class="btn btn-large btn-start">
-          <span class="start-icon">🎲</span>
-          <span>ابدأ اللعبة الآن!</span>
-        </button>
+        <!-- Start Button -->
+        <button id="start-btn">🎲 ابدأ اللعبة الآن!</button>
       </div>
     </section>
 
-    <!-- منطقة اللعبة -->
-    <section id="game-section" class="game-section hidden">
-      <!-- عرض اللاعب الحالي -->
-      <div class="game-header">
-        <div class="current-player-display">
-          <h2 id="current-player" class="player-name"></h2>
-          <div class="player-turn-indicator">
-            <span id="turn-number"></span>
-          </div>
-        </div>
-        <div class="game-stats-header">
-          <div class="stat">
-            <span class="stat-label">⏱️ الوقت:</span>
-            <span id="timer" class="stat-value">0:00</span>
-          </div>
-          <div class="stat">
-            <span class="stat-label">📊 نقاط:</span>
-            <span id="points-display" class="stat-value">0</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- صندوق السؤال -->
-      <div class="question-container">
-        <div class="question-type-badge" id="question-badge"></div>
-        <div class="question-box animated-question">
-          <div id="question-text" class="question-text"></div>
-          <div class="question-meta">
-            <span id="difficulty-badge" class="badge"></span>
-            <span id="question-counter" class="badge"></span>
-          </div>
-        </div>
-
-        <!-- الأزرار -->
-        <div class="question-actions">
-          <button id="next-btn" class="btn btn-success">
-            <span>✅ تم الإجابة</span>
-          </button>
-          <button id="skip-btn" class="btn btn-warning">
-            <span>⏭️ تخطي</span>
-          </button>
-          <button id="repeat-btn" class="btn btn-info">
-            <span>🔄 إعادة</span>
-          </button>
-          <button id="custom-btn" class="btn btn-secondary">
-            <span>✏️ سؤال مخصص</span>
-          </button>
-        </div>
-
-        <!-- مربع الإدخال المخصص -->
-        <div id="custom-input-box" class="custom-input-box hidden">
-          <input 
-            id="custom-question-input" 
-            type="text" 
-            placeholder="اكتب سؤالك الخاص..." 
-            class="fancy-input"
-            maxlength="200"
-          />
-          <button id="add-custom-btn" class="btn btn-primary">➕ إضافة</button>
-          <button id="cancel-custom-btn" class="btn btn-secondary">❌ إلغاء</button>
-        </div>
-      </div>
-
-      <!-- الدردشة والملاحظات -->
-      <div class="game-bottom">
-        <div class="notes-section">
-          <h3>📝 الملاحظات السريعة</h3>
-          <div id="notes-box" class="notes-box"></div>
-          <div class="notes-input">
-            <input 
-              id="note-input" 
-              type="text" 
-              placeholder="أضف ملاحظة..." 
-              class="fancy-input"
-            />
-            <button id="add-note-btn" class="btn btn-small btn-primary">➕</button>
-          </div>
-        </div>
-
-        <div class="chat-section">
-          <h3>💬 الدردشة الحية</h3>
-          <div id="chat-box" class="chat-box"></div>
-          <div class="chat-inputs">
-            <input 
-              id="chat-input" 
-              type="text" 
-              placeholder="أرسل رسالة..." 
-              class="fancy-input"
-            />
-            <button id="send-btn" class="btn btn-primary btn-small">📤</button>
-            <button id="image-btn" class="btn btn-small" title="صورة">🖼️</button>
-            <button id="record-btn" class="btn btn-small" title="صوت">🎤</button>
-            <button id="emoji-btn" class="btn btn-small" title="إيموجي">😊</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- أزرار الإنهاء -->
-      <div class="game-controls">
-        <button id="pause-btn" class="btn btn-warning">⏸️ إيقاف مؤقت</button>
-        <button id="end-btn" class="btn btn-danger">🛑 إنهاء اللعبة</button>
-        <button id="leaderboard-btn" class="btn btn-info">🏆 النتائج</button>
+    <!-- Game Section - سيتم تطويره في الملف القادم -->
+    <section id="game-section" class="section hidden">
+      <div style="text-align: center; padding: 50px;">
+        <h2>🎮 قسم اللعبة</h2>
+        <p>سيتم تطويره في الملف القادم</p>
       </div>
     </section>
 
-    <!-- شاشة النتائج -->
-    <section id="results-section" class="results-section hidden">
-      <div class="results-card">
-        <h2>🏆 النتائج النهائية</h2>
-        <div id="leaderboard" class="leaderboard"></div>
-        <div class="results-stats">
-          <div class="stat-box">
-            <span class="stat-icon">⏱️</span>
-            <div>
-              <span class="stat-label">إجمالي الوقت</span>
-              <span id="total-time" class="stat-value">0:00</span>
-            </div>
-          </div>
-          <div class="stat-box">
-            <span class="stat-icon">❓</span>
-            <div>
-              <span class="stat-label">الأسئلة</span>
-              <span id="total-questions" class="stat-value">0</span>
-            </div>
-          </div>
-          <div class="stat-box">
-            <span class="stat-icon">🎉</span>
-            <div>
-              <span class="stat-label">نسبة الإجابة</span>
-              <span id="answer-ratio" class="stat-value">0%</span>
-            </div>
-          </div>
-        </div>
-        <div class="results-actions">
-          <button id="share-btn" class="btn btn-primary">📤 مشاركة النتائج</button>
-          <button id="replay-btn" class="btn btn-success">🔄 لعبة جديدة</button>
-        </div>
+    <!-- Results Section - سيتم تطويره في الملف القادم -->
+    <section id="results-section" class="section hidden">
+      <div style="text-align: center; padding: 50px;">
+        <h2>🏆 النتائج</h2>
+        <p>سيتم تطويره في الملف القادم</p>
       </div>
     </section>
-
-    <!-- الإحصائيات -->
-    <section id="stats-section" class="stats-section hidden">
-      <div class="stats-card">
-        <h2>📊 الإحصائيات الشاملة</h2>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-emoji">🎮</span>
-            <div class="stat-content">
-              <span class="stat-label">إجمالي الجلسات</span>
-              <span id="total-sessions" class="stat-value">0</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <span class="stat-emoji">👑</span>
-            <div class="stat-content">
-              <span class="stat-label">أفضل لاعب</span>
-              <span id="best-player" class="stat-value">-</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <span class="stat-emoji">⚡</span>
-            <div class="stat-content">
-              <span class="stat-label">أسرع إجابة</span>
-              <span id="fastest-answer" class="stat-value">0s</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <span class="stat-emoji">📈</span>
-            <div class="stat-content">
-              <span class="stat-label">معدل الخجل</span>
-              <span id="skip-rate" class="stat-value">0%</span>
-            </div>
-          </div>
-        </div>
-        <button id="close-stats-btn" class="btn btn-secondary">✖️ إغلاق</button>
-      </div>
-    </section>
-
-    <!-- الإعدادات -->
-    <section id="settings-section" class="settings-section hidden">
-      <div class="settings-card">
-        <h2>⚙️ الإعدادات</h2>
-        <div class="settings-group">
-          <label class="toggle-label">
-            <input type="checkbox" id="sound-toggle" checked>
-            <span>🔊 تفعيل الأصوات</span>
-          </label>
-          <label class="toggle-label">
-            <input type="checkbox" id="haptic-toggle" checked>
-            <span>📳 الاهتزازات</span>
-          </label>
-          <label class="toggle-label">
-            <input type="checkbox" id="confetti-toggle" checked>
-            <span>🎉 تأثيرات الاحتفال</span>
-          </label>
-        </div>
-        <div class="settings-group">
-          <label>🔊 مستوى الصوت</label>
-          <input id="volume-slider" type="range" min="0" max="100" value="70" class="slider">
-        </div>
-        <div class="settings-actions">
-          <button id="clear-data-btn" class="btn btn-danger">🗑️ حذف البيانات</button>
-          <button id="close-settings-btn" class="btn btn-secondary">✖️ إغلاق</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- مشغل الموسيقى -->
-    <footer class="music-footer">
-      <div class="music-player">
-        <button id="music-toggle" class="music-btn" title="تشغيل/إيقاف">▶️</button>
-        <span class="music-label">الموسيقى الخلفية</span>
-        <input id="music-volume" type="range" min="0" max="100" value="25" class="slider">
-        <select id="music-select" class="fancy-select">
-          <option value="ambient">🌙 موسيقى هادئة</option>
-          <option value="romantic">💕 رومانسية</option>
-          <option value="epic">⚡ ملحمية</option>
-          <option value="chill">😎 هيب هوب</option>
-        </select>
-      </div>
-    </footer>
   </div>
 
-  <!-- عنصر الصوت -->
+  <!-- Music Player Footer -->
+  <footer class="music-footer">
+    <div class="music-player">
+      <button class="music-btn" id="music-toggle" title="تشغيل/إيقاف">▶️</button>
+      <span class="music-label">الموسيقى الخلفية</span>
+      <input id="music-volume" type="range" min="0" max="100" value="25" />
+      <select id="background-select">
+        <option value="ocean">🌊 محيط</option>
+        <option value="forest">🌲 غابة</option>
+        <option value="sunset">🌅 غروب شمس</option>
+        <option value="night">🌌 ليل ساحر</option>
+        <option value="blindlove">💕 الحب الأعمى</option>
+      </select>
+    </div>
+  </footer>
+
+  <!-- Audio Elements -->
   <audio id="background-music" loop></audio>
   <audio id="effect-sound" preload="auto"></audio>
 
-  <!-- Canvas للتأثيرات -->
+  <!-- Canvas for Confetti -->
   <canvas id="confetti-canvas"></canvas>
 
-  <script src="script.js"></script>
+  <!-- Script - سيتم ربطه عند الانتهاء من جميع الملفات -->
+  <script src="main.js"></script>
+
+  <script>
+    // Script بدائي للتأكد من عمل الصفحة قبل الـ main.js
+    console.log('✅ الصفحة تحميلت بنجاح!');
+    
+    // إضافة النجوم تلقائياً
+    const starsContainer = document.getElementById('stars-container');
+    for (let i = 0; i < 50; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      starsContainer.appendChild(star);
+    }
+
+    // إضافة الجزيئات تلقائياً
+    const particlesContainer = document.getElementById('particles-container');
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particlesContainer.appendChild(particle);
+    }
+  </script>
 </body>
 </html>
